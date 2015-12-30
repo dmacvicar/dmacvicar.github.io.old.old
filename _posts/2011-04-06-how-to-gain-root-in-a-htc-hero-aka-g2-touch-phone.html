@@ -1,0 +1,83 @@
+---
+layout: post
+title: How to gain root in a HTC Hero (aka G2 Touch) phone
+date: 2011-04-06 15:52:57.000000000 +02:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- software
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48563362'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/how-to-gain-root-in-a-htc-hero-aka-g2-touch-p
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+
+<p><em>DISCLAIMER</em>: I am not recommending you to root your phone and if you are not sure what for or what are the consequences of doing it (including your warranty), then don&rsquo;t do it. This post is only an explanation on <em>how</em> to do it. Also I am not responsible for any damage to your phone, including bricking it.</p>
+<p>First, download Android SDK 1.5 from <a href="http://developer.android.com/sdk/1.5_r3/index.html">here</a>, unpack it and go to the tools/ directory.</p>
+<p>My first problem:</p>
+<div class="CodeRay">
+<div class="code">
+<pre>./adb shell
+error: device not found</pre>
+</div>
+</div>
+<div class="CodeRay">
+<div class="code">
+<pre>./adb devices                        
+List of devices attached</pre>
+</div>
+</div>
+<p>Reading around I found out how to fix it, and then realized it was documented <a href="http://developer.android.com/guide/developing/device.html">here</a></p>
+<p>Create a file /etc/udev/rules.d/90-android.rules with the following content:</p>
+<div class="CodeRay">
+<div class="code">
+<pre>SUBSYSTEM==&quot;usb&quot;, SYSFS{idVendor}==&quot;0bb4&quot;, MODE=&quot;0666&quot;
+SUBSYSTEM==&quot;usb&quot;,ATTR{idVendor}==&quot;0bb4&quot;,ATTR{idProduct}==&quot;0c02&quot;,SYMLINK+=&quot;android_adb&quot;
+SUBSYSTEM==&quot;usb&quot;,ATTR{idVendor}==&quot;0bb4&quot;,ATTR{idProduct}==&quot;0c01&quot;,SYMLINK+=&quot;android_fastboot&quot;</pre>
+</div>
+</div>
+<p>And restart udev by doing killall -HUP udevd, then unplug and plug the phone.</p>
+<p>Now, get <a href="http://rapidshare.com/files/281026171/Recovery-RA-HERO-v1.2.2.img">Recovery-RA-HERO-v1.2.2.img</a> and <a href="http://member.america.htc.com/download/RomCode/ADP/fastboot.zip">fastboot</a> (unpack and chmod +x this one), and put them somewhere, or as this example assumes, in the same tools/ directory.</p>
+<p>Now boot the recovery image:</p>
+<div class="CodeRay">
+<div class="code">
+<pre>./adb shell reboot bootloader
+./fastboot boot Recovery-RA-HERO-v1.2.2.img</pre>
+</div>
+</div>
+<p>You can use the NDroid Backup option to backup your phone to the SDCard.</p>
+<p>Get <a href="http://forum.xda-developers.com/attachment.php?attachmentid=211569&amp;d=1249225060">Superuser.zip</a> (requires registration in the xda-developers phorum) and unpack it. You will get two files from there: &ldquo;Superuser.apk&rdquo; and &ldquo;su&rdquo;.</p>
+<div class="CodeRay">
+<div class="code">
+<pre>./adb shell mount /system
+./adb push su /system/bin/
+./adb shell chmod 4755 /system/bin/su
+./adb push Superuser.apk /system/app/
+./adb shell reboot</pre>
+</div>
+</div>
+<p>Now confirm that it worked:</p>
+<div class="CodeRay">
+<div class="code">
+<pre>./adb shell
+su</pre>
+</div>
+</div>
+<p>(Click Always allow on the phone)</p>
+<p>And that is!.</p>
+<p>If you need to restore your NDroid backup, I haven&rsquo;t tried, but you can do it from the recovery image or manually pointing it to the images:</p>
+<div class="CodeRay">
+<div class="code">
+<pre>fastboot flash boot /boot.img
+fastboot flash system /system.img
+fastboot flash userdata /data.img
+fastboot reboot</pre>
+</div>
+</div>

@@ -1,0 +1,100 @@
+---
+layout: post
+title: Moving openSUSE Factory to aria2c (and new features)
+date: 2009-02-23 08:04:56.000000000 +01:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- newsuse
+- software
+- suse
+- yast
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48645342'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/moving-opensuse-factory-to-aria2c-and-new-fea
+  _oembed_6599fdeaf3f1b6e57ab0b56f9e80c752: "{{unknown}}"
+  _oembed_93b65968e2e0279ad1b0ebb34b756b43: "{{unknown}}"
+  _oembed_6ab06a5d79528a4fcea013cdf7b76034: "{{unknown}}"
+  _oembed_abdb738f7eda1133b6892df595c96e3d: "{{unknown}}"
+  _oembed_3832f2fb12f00262d010a52388f0cb6d: "{{unknown}}"
+  _oembed_db1b45af07c8d3b20950c1ce70148b32: "{{unknown}}"
+  _oembed_3e204a874848db3ad979cf5047345234: "{{unknown}}"
+  _oembed_7f99b25027dcb8c33a400ff884171572: "{{unknown}}"
+  _oembed_d66952cbf97e7f17272a867fbcb59703: "{{unknown}}"
+  _oembed_f11005a1c8c9a07c323cd16cb68735cb: "{{unknown}}"
+  _oembed_e6e13156c1bbda7cf84479c254c64978: "{{unknown}}"
+  _oembed_f456ff970e362c0174680f59e46a7e93: "{{unknown}}"
+  _oembed_10e7716a318c3368d8dda20fa3cb1e1a: "{{unknown}}"
+  _oembed_607fc23cbcb670354a30cd22fe878ff8: "{{unknown}}"
+  _oembed_3787222dd4cb8b4b1a3d4663422e31be: "{{unknown}}"
+  _oembed_772f79bdba7a18485afbd177f88f19ec: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    You may remember, openSUSE 11.1 shipped with experimental (and by default disabled) software management stack improved HTTP download support, based on aria2c, which gives additional capabilities to take advantage of our famous [download infrastructure][1], on which [Peter][2] has been working on.</p>
+<p>The ultimate goal of this is to provide a pleasant experience to our advanced users tracking Factory and doing frequent dist-upgrades ([feature 305634][3]), and this includes other cool improvements, like [the one announced some days ago][7], based on [Stephan Kulow][8] and Michael Matz's build compare techniques, and of course the one I describe here: robust mirror handling and improved download experience ([feature 302923][4]).</p>
+<p>The next step for the aria2c backend is to enable it as a default. Everything was working more or less smooth, except file existence detection, which is needed for the repository probing components. This part of the code was implemented as a "always true" stub.</p>
+<p>As the MediaCurl code was already a bit messy, duplication was started to be everywhere, and actually MediaAria2c already had quite a lot of code duplicated from MediaCurl. However, a big refactoring required studying the code in deep.</p>
+<p>Thanks to the Asian restaurant near the office, which did not clean their surroundings from the ice created from the past snowy days in N&uuml;rnberg, I had to stay some days at home (medical order) due to a very ugly fall that made my left arm useless (except for some typing), which gave me the quiet opportunity to study/read that code and figure out a solution.</p>
+<p>I tried tons of different things. Even using curl command line from the aria backend only to check file existence, but at the end the problems I encountered (and figuring out some missing features from aria2c) pushed me in the direction of making the aria2c backend a particular case of the curl backend, and therefore I could reuse features from curl, without worrying about reentrant access to media attach points or other stuff. This reduced the code of the aria2c backend considerably. MediaCurl is now much smaller (about 200 lines of duplicated code removed), so we can add range support (I will explain this in a future post) to the API.</p>
+<p>On the way to this refactoring, the following features/options (zypp.conf) got implemented:</p>
+<div class="CodeRay">
+<div class="code">
+<pre>##
+## Maximum number of concurrent connections to use per transfer
+## This setting is only used if more than one is possible
+## Setting it to a reasonable number avoids flooding servers
+##
+# download.max_concurrent_connections = 2
+&lt;/pre&gt;
+
+The option above only works with the aria2c backend. Not with pure curl.
+
+&lt;pre class=&quot;prettyprint&quot;&gt;
+##
+## Sets the minimum download speed (bytes per second)
+## until the connection is dropped
+## This can be useful to prevent security attacks on hosts by
+## providing updates at very low speeds.
+##
+## 0 means no limit
+##
+# download.min_download_speed = 0
+&lt;/pre&gt;
+
+The option above can be used to prevent a (very theoretical) attack described in [this report][6], where the bad guys will send data very slowly to the client to keep it unpatched. This option should work with both aria2c and curl backends.
+
+Also, we implemented the following options for those people sharing a connection or needing to limit the connection usage somehow:
+
+&lt;pre class=&quot;prettyprint&quot;&gt;
+## Maximum download speed (bytes per second)
+## 0 means no limit
+# download.max_download_speed = 0
+&lt;/pre&gt;
+
+Also, the following option is useful for people doing the dist-upgrade unattended, so they can set it to try hard, or just to keep trying without interaction:
+
+&lt;pre class=&quot;prettyprint&quot;&gt;
+## Number of tries per download which will be
+## done without user interaction
+## 0 means no limit (use with caution)
+# download.max_silent_tries = 5</pre>
+</div>
+</div>
+<p>These features are in libzypp 6.1.0, Factory has 5.11.0 right now. I plan to submit to Factory in the following days (after basic testing). Once aria2c is the default, it can be disabled using ZYPP_ARIA2C=0 which will give you the basic curl back.</p>
+<p>Of course, this may result in new bugs or problems. So be prepared!</p>
+<p> [1]: <a href="http://www.mirrorbrain.org">http://www.mirrorbrain.org</a><br />
+ [2]: <a href="http://en.opensuse.org/User:Poeml">http://en.opensuse.org/User:Poeml</a><br />
+ [3]: <a href="https://features.opensuse.org/305634">https://features.opensuse.org/305634</a><br />
+ [4]: <a href="https://features.opensuse.org/302923">https://features.opensuse.org/302923</a><br />
+ [5]: <a href="https://features.opensuse.org/303532">https://features.opensuse.org/303532</a><br />
+ [6]: <a href="http://www.cs.arizona.edu/people/justin/packagemanagersecurity/attacks-on-package-managers.html">http://www.cs.arizona.edu/people/justin/packagemanagersecurity/attacks-on-pac...</a><br />
+ [7]: <a href="http://news.opensuse.org/2009/02/05/more-efficient-factory-development/">http://news.opensuse.org/2009/02/05/more-efficient-factory-development/</a><br />
+ [8]: <a href="http://en.opensuse.org/User:Coolo">http://en.opensuse.org/User:Coolo</a></p>

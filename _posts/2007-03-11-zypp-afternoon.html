@@ -1,0 +1,43 @@
+---
+layout: post
+title: zypp afternoon
+date: 2007-03-11 07:25:53.000000000 +01:00
+type: post
+published: true
+status: publish
+categories: []
+tags: []
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48643952'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/zypp-afternoon
+  _oembed_23ddb0c7aee22633a5babe1ad099ffac: "{{unknown}}"
+  _oembed_33f37ecf3b58e46550b8a5e19bc0c247: "{{unknown}}"
+  _oembed_10567f8b975774911c663f918031f50f: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    pterjan asks himself [why rpm -qa is so slow][1] and then [answers himself][2]. The reason checks digests and signatures by default when reading. I wonder what behavior you get by default when reading from the db with the API.</p>
+<p>Redhat magazine features [the history of rpm][3].</p>
+<p>Saturday afternoon spent on zypp redesign.</p>
+<p>As the metadata cache concept evolve, I need at least prototypes of the future milestones concepts to test and play.</p>
+<p>One of the parts zypp needs a major redesign is source handling, because this affects annoying bugs like refreshing the sources when you just need to create the object. This is due because the same component is responsible of downloading, and creating the resolvables.</p>
+<p>The original concept of the redesign was splitting sources into three components:</p>
+<p>* Downloaders: take an URL and download the metadata. Sounds piececake, but most metadata require some parsing in order to know what you need to download.<br />
+* Parsing: parse raw metadata and fill the cache via the store API.<br />
+* The Source itself. Construct the resolvables from the store, using the query API.</p>
+<p>During FOSDEM I was able to end with a working MediaSetAccess class which is independant from the SourceImpl class.</p>
+<p>MediaSetAccess is a thin layer over the Media API that knows about multiple medias, and can be used by any other component. It allows to attach a media verifier to each media number.</p>
+<p>Today I got two more prototypes. A Fetcher class, that allows you to enqueue a bunch of remote files. You can define places where those files can already be cached. Then you can start the task of transfering from the network all files that can't be retrieved directly from the defined caches. The main purpose of Fetcher is at some point allow parallel downloads without affecting the other components.</p>
+<p>The [SourceType]Downloader class is specific to a source type, and encapsulates the logic of getting metadata files to know which other files are needed, and uses a Fetcher to get those files as they are known.</p>
+<div class="p_embed p_image_embed">
+<img alt="Media_httpimg147image_dmbsx" height="456" src="{{ site.baseurl }}/assets/media_httpimg147image_dmbsx-scaled500.png?w=230" width="350" />
+</div>
+<p>I am still unsure if some responsabilities should go in MediaSetAccess or in the Fetcher class, but I will figure that out later, as I replicate at least one complete Downloader.</p>
+<p>  [1]: <a href="http://fasmz.org/~pterjan/blog/?date=20050914">http://fasmz.org/~pterjan/blog/?date=20050914</a><br />
+  [2]: <a href="http://fasmz.org/~pterjan/blog/?date=20051208">http://fasmz.org/~pterjan/blog/?date=20051208</a><br />
+  [3]: <a href="http://www.redhatmagazine.com/2007/02/08/the-story-of-rpm/">http://www.redhatmagazine.com/2007/02/08/the-story-of-rpm/</a></p>

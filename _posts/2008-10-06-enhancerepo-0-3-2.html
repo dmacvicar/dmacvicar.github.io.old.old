@@ -1,0 +1,90 @@
+---
+layout: post
+title: enhancerepo 0.3.2
+date: 2008-10-06 18:51:01.000000000 +02:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- enhancerepo
+- newsuse
+- software
+- suse
+- yum
+- zypp
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48644997'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/enhancerepo-032
+  _oembed_a2e554f36fc76464649bed7eea25c5b4: "{{unknown}}"
+  _oembed_5dac7ce4885c2f1187b55d6356cd1a19: "{{unknown}}"
+  _oembed_377d97c5a037238b085ea4f9ad54f2ee: "{{unknown}}"
+  _oembed_bc4638205c9fe1f154745cfe01584adb: "{{unknown}}"
+  _oembed_daf2eef745b9abe0a665e540ecd8b21b: "{{unknown}}"
+  _oembed_bf36581add0c80c7e9e75007aa681178: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    A new version of [enhancerepo][1] (0.3.2) is building in [the build service][2].</p>
+<p>The new feature is updateinfo metadata generation (patches) support, in a simple but very automatic way, designed specially for testing purposes, but it may be sufficient for people wanting to generate patches for their own repositories.</p>
+<p>Using the --generate-update pkg1,pkg2.. option, enhancerepo will look in your repository (and additionally in another base directory), and look for all packages. If a package has multiple versions available (including the base directory) it will create update metadata in the repoparts directory. If you run enhancerepo with the --updates option (either in the same run or not) it will take all repoparts and index them in the updateinfo.xml. This allow to manually edit the patches before indexing them, or to mix automatically generated ones with hand-crafted ones.</p>
+<p>As additional coolness it will look for bugs to generate descriptions/references, update type (for example changes containing CVE references or vulnerabilities are tagged with security automatically).</p>
+<p>For example, I have 2 amarok packages in my repo, plus one in the 11.0 base directory. This command will look the 3 rpms, and start looking backwards till it finds some changes in the changelog. You can specify multiple packages per "patch".</p>
+<div class="CodeRay">
+<div class="code">
+<pre># enhancerepo --generate-update amarok --updates --updates-base-dir /space/repo/11.0 /space/repo/duncan2
+generating update...
+3 versions for 'amarok'
+Found change amarok-1.4.10-17-i586.i586 and amarok-1.4.9.1-53-i586.i586.
+'amarok' has 1 entries (68/67)
+Saving update part to '/space/repo/duncan2/repoparts/update-amarok-1.xml'.
+Adding update /space/repo/duncan2/repoparts/update-amarok-1.xml
+Saving /space/repo/duncan2/repodata/updateinfo.xml.gz ..
+Adding /space/repo/duncan2/repodata/updateinfo.xml.gz to
+       /space/repo/duncan2/repodata/repomd.xml index
+repodata/updateinfo.xml.gz already exists. Replacing.
+Saving /space/repo/duncan2/repodata/repomd.xml ..</pre>
+</div>
+</div>
+<p>The resulting updateinfo.xml:</p>
+<div class="CodeRay">
+<div class="code">
+<pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;updates&gt;
+&lt;update status=&quot;stable&quot; from=&quot;dmacvicar@piscola&quot; type=&quot;security&quot; version=&quot;1&quot;&gt;
+  &lt;title&gt;Untitled updatesecurity update 1 for amarok&lt;/title&gt;
+  &lt;id&gt;amarok&lt;/id&gt;
+  &lt;issued&gt;1223293050&lt;/issued&gt;
+  &lt;release&gt;no release&lt;/release&gt;
+  &lt;description&gt;
+    - update to 1.4.10: fix tmp file vulnerability in the Magnatune
+    database parsing. Secunia#SA31418 / CVE-2008-3699 / bnc#417232
+  &lt;/description&gt;
+  &lt;references&gt;
+    &lt;reference href=&quot;http://bugzilla.novell.com/417232&quot;
+       title=&quot;bug number 417232&quot; type=&quot;bugzilla&quot; id=&quot;417232&quot;/&gt;
+    &lt;reference
+       href=&quot;http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2008-3699&quot;
+       title=&quot;CVE number 2008-3699&quot; type=&quot;cve&quot; id=&quot;2008-3699&quot;/&gt;
+  &lt;/references&gt;
+  &lt;pkglist&gt;
+    &lt;collection&gt;
+      &lt;package name=&quot;amarok&quot; arch=&quot;i586&quot; version=&quot;1.4.10&quot; release=&quot;17&quot;&gt;
+        &lt;filename&gt;amarok-1.4.10-17.i586.rpm&lt;/filename&gt;
+      &lt;/package&gt;
+    &lt;/collection&gt;
+  &lt;/pkglist&gt;
+&lt;/update&gt;
+&lt;/updates&gt;</pre>
+</div>
+</div>
+<p>Some important notes:</p>
+<p>* If you generate an update, and then you don't add new packages or changes, enhancerepo will generate the same update again, but with a new version.</p>
+<p> [1]: <a href="http://en.opensuse.org/Enhancerepo">http://en.opensuse.org/Enhancerepo</a><br />
+ [2]: <a href="http://software.opensuse.org/search?q=enhancerepo">http://software.opensuse.org/search?q=enhancerepo</a><br />
+ [3]: <a href="http://software.opensuse.org/search?q=ruby-rpm">http://software.opensuse.org/search?q=ruby-rpm</a></p>

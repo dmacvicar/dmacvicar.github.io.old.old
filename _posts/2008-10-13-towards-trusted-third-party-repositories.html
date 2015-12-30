@@ -1,0 +1,106 @@
+---
+layout: post
+title: Towards trusted third party repositories
+date: 2008-10-13 13:38:36.000000000 +02:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- newsuse
+- software
+- suse
+- yum
+- zypp
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48645028'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/towards-trusted-third-party-repositories
+  _oembed_7a23fb4c20f0b3bd82f7bbce91c3c420: "{{unknown}}"
+  _oembed_d03a428159d4957ab9d893c33bff09a4: "{{unknown}}"
+  _oembed_f37a042c7def8ba0750a92d74cae4694: "{{unknown}}"
+  _oembed_1b6e3e4986491d3552c51a8dd9da1c7a: "{{unknown}}"
+  _oembed_074491b460a362f8bccee88e7e1ca501: "{{unknown}}"
+  _oembed_3567e5f8fb66e339b56196be29322033: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    I got pointed to [Dan's Kegel post on Linux Foundation's packaging mailing list][1] called "Towards trusted third party repositories". I am not subscribed to the list so I am commenting here.</p>
+<p>&gt;I've been intrigued by <a href="http://en.opensuse.org/Standards/One_Click_Install">http://en.opensuse.org/Standards/One_Click_Install</a><br />
+&gt;for some time now.  (That's a way to provide a one-click web<br />
+&gt;install experience for .deb/.rpm/.psi etc. packages, implemented<br />
+&gt;as a mime type handler that parses a simple .xml file pointing<br />
+&gt;to the package/repository appropriate for each distro.)<br />
+&gt;When this idea was brought up on the Packagekit mailing<br />
+&gt;list, it generated lots of negative feedback.  The summary at<br />
+&gt;<a href="http://packagekit.org/pk-faq.html#1-click-install">http://packagekit.org/pk-faq.html#1-click-install</a><br />
+&gt;gives a bunch of non-central objections, followed by<br />
+&gt;the central objection that one cannot trust third party repositories:<br />
+&gt;"Allowing to easily add third party repositories and install<br />
+&gt;third party software without a certification infrastructure is like<br />
+&gt;opening the gates to hell"</p>
+<p>One Click Install is only a simple description to add a repository and some software, but the security is not a property of this simple description, but of the package manager. A malicious one click install file can point ZYpp to "hell", but "hell:</p>
+<p>* Either is signed with a non trusted key and the user needs to trust it.<br />
+* Is signed with the distribution key, which is already in the trusted keyring therefore it just works.</p>
+<p>&gt;This is a real problem.   Here are a couple risks:</p>
+<p>No, it is not. It depends on the package manager you are using. Basic security here is independent of one click install.</p>
+<p>&gt;1) users might click on malware sites and add<br />
+&gt;completely malicious sites to their repository lists</p>
+<p>Again, this is not true for ZYpp, and I guess not all package managers allows to download metadata from a repository without trusting it first.</p>
+<p>&gt;2) a compromised third-party repository<br />
+&gt;might update system packages maliciously.</p>
+<p>If you trusted it, there is nothing you can do.</p>
+<p>&gt;3) several genuinely well-intentioned<br />
+&gt;repositories might include conflicting versions of<br />
+&gt;a commonly needed package not provided by the<br />
+&gt;system repositories.</p>
+<p>This has nothing to do with one click install. Packman repository does it already. This is a dependency resolving problem and vendor management: ZYpp for example, does not allow implicit vendor jump on update (only on dist-upgrade). And vendor jump is a conflict you need manually to approve. Only package managers that threat all packages with the same name as the same package suffer here.</p>
+<p>&gt;After mulling this problem over for a long time,<br />
+&gt;two ideas came to mind:<br />
+&gt;1) Since the distribution is trusted, it could decide<br />
+&gt;to trust some third-party repositories.  For instance,<br />
+&gt;it might decide to trust Adobe's hypothetical<br />
+&gt;repository so that people could get flash and air<br />
+&gt;updates straight from the source.</p>
+<p>This is possible now:</p>
+<p>* You can import Adobe's key into the distribution together with the distribution key, so it goes automatically to the trusted keyring<br />
+* You can create metadata in the distribution side, linking to Adobe's packages, and sign the metadata with the distribution key<br />
+* You can do nothing and let the user trust explicitly the repository</p>
+<p>&gt;This idea of using the distribution as arbiter of<br />
+&gt;trust for third party repositories could be extended<br />
+&gt;to games publishers, etc.  This could provide a<br />
+&gt;partial solution to the first threat listed above;<br />
+&gt;if the "good" third-party repositories are already<br />
+&gt;known to the distribution, there's less need for users<br />
+&gt;to be doing something dangerous like deciding<br />
+&gt;on their own to trust a random third-party repo.<br />
+&gt;This addresses the first threat identified above.</p>
+<p>I think repository trusting and the required package manager infrastructure has nothing to do with one click install. It just needs to be there.</p>
+<p>&gt;2) A simple way to keep repositories from<br />
+&gt;updating packages they shouldn't is to<br />
+&gt;have package managers enforce some sort<br />
+&gt;of namespacing.  e.g. Adobe's repository<br />
+&gt;could be allowed to only update packages<br />
+&gt;whose names start with "adobe-".<br />
+&gt;(System repositories would continue to be<br />
+&gt;able to update any package at all.)<br />
+&gt;This addresses the second and third threats<br />
+&gt;identified above.</p>
+<p>Why inventing a new thing? You already have the vendor tag there. A package should be considered update candidate only for packages that are from the same vendor.</p>
+<p>Imagine you have mediaplayer-1.0 from the distribution, without mp3 support. Then a 3rd party repo offers a compiled 2.0 version with mp3 support but without other features, and then the distribution offers 3.0. You would be getting and losing features all the time as you update. Same package names does not means it is the same package. If your package manager does that, it is a bug. If there is no solution to the dependency solving than jumping vendor, do a conflict and make the user explicitly switch. Once he does, the update candidate would be the same vendor packages.</p>
+<p>&gt;I think something like this is going to be needed<br />
+&gt;before we can have a thriving -- and safe --<br />
+&gt;ecosystem of ISVs providing<br />
+&gt;easily-downloaded-and-installed binary packages<br />
+&gt;for Linux.<br />
+&gt;What do people think about the package namespacing<br />
+&gt;idea?<br />
+&gt;- Dan</p>
+<p>I don't think reinventing the vendor tag and repository signatures is a good idea.</p>
+<p>The problem is not at this level, IMHO the only thing we can do is improve the usability of the security chain. For the user is meanless to trust a repository with gpg key 0x32432432 and they will probably just click "yes". The pending task is to make the cryptographic chain something that makes sense for the user.</p>
+<p>[1]: <a href="https://lists.linux-foundation.org/pipermail/packaging/2008-October/000842.html">https://lists.linux-foundation.org/pipermail/packaging/2008-October/000842.html</a><br />
+[2]: <a href="http://en.opensuse.org/Standards/One_Click_Install">http://en.opensuse.org/Standards/One_Click_Install</a></p>

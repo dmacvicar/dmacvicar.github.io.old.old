@@ -1,0 +1,37 @@
+---
+layout: post
+title: bicho 0.0.3 released
+date: 2011-12-09 14:27:50.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Software
+tags:
+- bugzilla
+- ruby
+- suse
+meta:
+  _edit_last: '34818'
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p><a title="Bicho on github" href="http://github.com/dmacvicar/bicho">Bicho</a> is a ruby gem implementing access to bugzilla. It is a library but comes with a simple command line client.</p>
+<p>This <a title="Bicho on rubygems.org" href="http://rubygems.org/gems/bicho">release</a> fixes some bugs and adds support for named queries.</p>
+<p>From the <a title="Bicho API docs" href="http://rubydoc.info/github/dmacvicar/bicho/v0.0.3/frames">API</a>, you can give a bug number or named query, or a combination of many of them:</p>
+<p>[sourcecode language="ruby"]<br />
+server.get(127043, 432423) =&gt; [....]<br />
+server.get(&quot;Named list&quot;) =&gt; [....]<br />
+server.get(&quot;Named list&quot;, 4423443) =&gt; [....]<br />
+[/sourcecode]</p>
+<p>Named queries will be "expanded" to a list of bugs.<br />
+or from the command line</p>
+<p><pre>
+bicho -b https://user:pw@bugzilla.domain.com show query-name
+</pre></p>
+<p>If you are using Novell's bugzilla, Bicho includes a plugin that automatically authenticates using your .oscrc credentials.</p>
+<p>Be sure to also checkout <a title="Klaus twitter" href="http://twitter.com/#!/kkaempf">Klaus's</a> <a title="dm-bugzilla-adapter" href="https://github.com/openSUSE/dm-bugzilla-adapter">bugzilla adapter for data-mapper</a>, which is also powered by Bicho.</p>

@@ -1,0 +1,67 @@
+---
+layout: post
+title: Package search and others
+date: 2008-04-27 19:58:05.000000000 +02:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- newsuse
+- packagemanagement
+- suse
+- yast
+- zypp
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48644628'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/package-search-and-others
+  _oembed_8fdea4eb129b6f466868431db43a61ea: "{{unknown}}"
+  _oembed_095723df02971760ef9c465f853bde9a: "{{unknown}}"
+  _oembed_9d1f5650f9275cdf3096907b4814eef4: "{{unknown}}"
+  _oembed_57c7d285af815172905c6b944ad2ab6c: "{{unknown}}"
+  _oembed_e62940d356dc67657bab5db2977c572e: "{{unknown}}"
+  _oembed_b68d7f11c39990b903a2931e1022c06c: "{{unknown}}"
+  _oembed_1de6f6a4384b25c5209e28f2caf73f6a: "{{unknown}}"
+  _oembed_ce0511dec021c85b6e2e69ccffc401bb: "{{unknown}}"
+  _oembed_590c0750cadb3f2fc6493389530e9c52: "{{unknown}}"
+  _oembed_731c8e27ec858e8643b64831474880b2: "{{unknown}}"
+  _oembed_32185080beba897c5dc4a214f2cd14ad: "{{unknown}}"
+  _oembed_c2e0f72197de20e73fe99a08fe38d091: "{{unknown}}"
+  _oembed_7605a9e0dd6bbd80aedde95db21dd4f7: "{{unknown}}"
+  _oembed_6d6ff75339fceb5f8b2d7acc30a1035d: "{{unknown}}"
+  _oembed_14376a3220514b05b26f0920ec9ecc35: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    ### YaST ideas and research</p>
+<p>We moved the summer of code ideas, and other projects to the [YaST/Research][9] page. We would like to find all the experiments that are lying around in the tmp and experimental branches and put them together in that page so previous attempts and knowledge is not lost.</p>
+<p>### Installation Branding</p>
+<p>Some information on branding the installation is available on [YaST/Tips#Branding_the_installation][1].</p>
+<p>### Package groups</p>
+<p>The first thing that caught my attention in the rpm world was  [package groups][8]. It is a 4 deep level tree which has become pretty useless with time. They are also not consistent across rpm distributions. I agree that they are interesting metadata (because they contain keywords), but nothing you want to display in a user interface.</p>
+<p>So I started to ask people around. Do you use the groups tree?. "YES" was the first reply. I was surprised. Were my initial guesses wrong?. "I use it to select the zzzAll group, which is the only way to select all packages". Interesting point, any effort to change this should take that into account.</p>
+<p>Luckily all the answers were the same. The famous "zzzAll" group was the only reason why people used that filter.</p>
+<p>So when looking for a way to make that screen more easy to the eyes, [PackageKit][6] groups seemed like the way to go, as they are already in use in some applications.</p>
+<p>That is how package groups looked like before:</p>
+<p>[![rpm groups before][2]][3]</p>
+<p>After matching the rpm groups to PackageKit groups, this is the result. Easy.</p>
+<p>[![rpm groups after][4]][5]</p>
+<p>Notice that "All packages" is still there. Also there is a recommended and suggested groups. The interesting thing is, that if you look at other applications, like Gnome PackageKit install, which is a braindead application (no features) compared to YaST, but still, now they look pretty consistent with each other:</p>
+<p>![packagekit search][7]</p>
+<p>Before you cry for your old 4 level deep tree, you can still reach the groups via search. Search will look into the groups field and also the generated keywords in the metadata (tags).</p>
+<p>### Package search</p>
+<p>Now uses the sat solver APIs to query the solv files, which is much faster and we have transparent access to more attributes.</p>
+<p>[1]: <a href="http://en.opensuse.org/YaST/Tips#Branding_the_installation">http://en.opensuse.org/YaST/Tips#Branding_the_installation</a><br />
+[2]: <a href="http://files.opensuse.org/opensuse/en/thumb/d/d3/Rpmgroups-before.png/800px-Rpmgroups-before.png">http://files.opensuse.org/opensuse/en/thumb/d/d3/Rpmgroups-before.png/800px-R...</a><br />
+[3]: <a href="http://files.opensuse.org/opensuse/en/d/d3/Rpmgroups-before.png">http://files.opensuse.org/opensuse/en/d/d3/Rpmgroups-before.png</a><br />
+[4]: <a href="http://files.opensuse.org/opensuse/en/thumb/0/02/Rpmgroups-after.png/800px-Rpmgroups-after.png">http://files.opensuse.org/opensuse/en/thumb/0/02/Rpmgroups-after.png/800px-Rp...</a><br />
+[5]: <a href="http://files.opensuse.org/opensuse/en/0/02/Rpmgroups-after.png">http://files.opensuse.org/opensuse/en/0/02/Rpmgroups-after.png</a><br />
+[6]: <a href="http://www.packagekit.org/">http://www.packagekit.org/</a><br />
+[7]: <a href="http://www.packagekit.org/img/gpk-application-search.png">http://www.packagekit.org/img/gpk-application-search.png</a><br />
+[8]: <a href="http://forgeftp.novell.com/susesdk/docs/SUSE%20Package%20Conventions/spc_rpm_groups.html">http://forgeftp.novell.com/susesdk/docs/SUSE%20Package%20Conventions/spc_rpm_...</a><br />
+[9]: <a href="http://en.opensuse.org/YaST/Research">http://en.opensuse.org/YaST/Research</a></p>

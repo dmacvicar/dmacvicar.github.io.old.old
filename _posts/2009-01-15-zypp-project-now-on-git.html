@@ -1,0 +1,87 @@
+---
+layout: post
+title: ZYpp project now on git
+date: 2009-01-15 01:19:59.000000000 +01:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- git
+- newsuse
+- software
+- suse
+- yast
+- zypp
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48645332'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/zypp-project-now-on-git
+  _oembed_60c266a3584e05a7882cfd3b990f4f90: "{{unknown}}"
+  _oembed_b7098f9839a849e54bbd704109215fbc: "{{unknown}}"
+  _oembed_cc1fff1ae97b6b918f631d6ac421afa5: "{{unknown}}"
+  _oembed_3efa4211a3aa0af81591aa2ae94fd4f7: "{{unknown}}"
+  _oembed_4e2a01879c2db7969a5268d9d76a7594: "{{unknown}}"
+  _oembed_361ece2f80657d8d191e32c677f011e8: "{{unknown}}"
+  _oembed_6e640e898cf0f9f8b4f614459982b8c1: "{{unknown}}"
+  _oembed_5371e59d27e08d83720fc74fd6e60104: "{{unknown}}"
+  _oembed_c1f4f29268cc48d4653220326b35570c: "{{unknown}}"
+  _oembed_be8cae33d8c9599420eb8eec6a4a7816: "{{unknown}}"
+  _oembed_ece49faf98772c7c75d710eeb184fa76: "{{unknown}}"
+  _oembed_7bf5c9ab536be29082d52877795da757: "{{unknown}}"
+  _oembed_3cc59470d87a15fb4cb36779f7a6970e: "{{unknown}}"
+  _oembed_c8fc6a3e7d7cc7ce63c0d7bd2ae21a4f: "{{unknown}}"
+  _oembed_db23d301b1b8fd55be2ab6f90274854b: "{{unknown}}"
+  _oembed_cef9f55a5f8ae58567b13bad828b96c4: "{{unknown}}"
+  _oembed_1ec487a3fd37e52adc639011fff821fa: "{{unknown}}"
+  _oembed_8a06cb9d52bc41ea88ef1a4791f097f1: "{{unknown}}"
+  _oembed_3ace87e541562b633ab1deeb0cc54e8d: "{{unknown}}"
+  _oembed_25e4ffcd8e70261a5b75035ed35c4982: "{{unknown}}"
+  _oembed_4b9fdc4cee076bb49091789003043cd3: "{{unknown}}"
+  _oembed_a2c92b5c937b4957b6269718f55c5b22: "{{unknown}}"
+  _oembed_36f6cebf420b89f29b9466a323796ea9: "{{unknown}}"
+  _oembed_2a8278a09db54059ea49aa197ed22415: "{{unknown}}"
+  _oembed_d0bf4344ed2afcb8e6d9e3c9c5c5ebfb: "{{unknown}}"
+  _oembed_260e1b8151f71042067245b7ba5c2f9a: "{{unknown}}"
+  _oembed_76f45e4233a562ea1b338bc385087dc1: "{{unknown}}"
+  _oembed_0147f48304d21abe0137e1770f6e8ad0: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    You may have noticed (or not?) that svn.opensuse.org/svn/zypp is now<br />
+read-only :-)</p>
+<p>Since a couple of weeks the ZYpp project repository is now hosted on git.opensuse.org. Please read the official announcement [here][3].</p>
+<p>Now you can fork and develop much easily without needing access to the "official repository". Developers can work disconnected, enjoy the git features to handle merges and branches, oh, and you can keep your forks in git publishing sites like the cool [GitHub][13]</p>
+<p>We updated the following pages to reflect the move:</p>
+<p>* [ZYpp Development page][4]<br />
+* [sat-solver homepage][5]</p>
+<p>Those also link to the new pages, written as a starting point:</p>
+<p>* [General git information and useful links][6]<br />
+* [git hosting (including git.opensuse.org) information][7]</p>
+<p>One of the challenges of the migration was continuous integration. We needed to replicate the automated<br />
+building/testing process, which is a core part of the ZYpp team development model.</p>
+<p>The process has been migrated from cruisecontrol.rb to [Hudson][8] ( Extensible continuous integration engine, <a href="https://hudson.dev.java.net/)">https://hudson.dev.java.net/)</a> which provides better job handling support, plugins and it is not tied<br />
+to svn.</p>
+<p>Some new features:</p>
+<p>* We now build zypper automatically over the rest of the ZYpp stack.<br />
+* We publish the last successful build that passes the testsuite automatically to [zypp:Head][10] project. This one will obsolete zypp:svn.<br />
+* We are working to build other pieces of the stack automatically, like PackageKit.<br />
+* We are working to also build and test the whole YaST stack, so it can also be published automatically. So expect a YaST:Head project soon too, to obsolete YaST:SVN (outdated).</p>
+<p>I would like to thank R. Tyler for his help with Hudson plugins, [Jens Daniel][12] for his original automation scripts we used, which are still the base for the Hudson build scripts :-), [Stano][11] for adding on-request features to y2makeall, and the [Hudson][8] developers for such a amazing piece of software.</p>
+<p>[1]: <a href="http://www.qtsoftware.com/about/news/lgpl-license-option-added-to-qt">http://www.qtsoftware.com/about/news/lgpl-license-option-added-to-qt</a><br />
+[2]: <a href="http://arstechnica.com/news.ars/post/20090114-nokia-qt-lgpl-switch-huge-win-for-cross-platform-development.html">http://arstechnica.com/news.ars/post/20090114-nokia-qt-lgpl-switch-huge-win-f...</a><br />
+[3]: <a href="http://lists.opensuse.org/zypp-devel/2009-01/msg00000.html">http://lists.opensuse.org/zypp-devel/2009-01/msg00000.html</a><br />
+[4]: <a href="http://en.opensuse.org/Libzypp/Devel">http://en.opensuse.org/Libzypp/Devel</a><br />
+[5]: <a href="http://en.opensuse.org/Package_Management/Sat_Solver">http://en.opensuse.org/Package_Management/Sat_Solver</a><br />
+[6]: <a href="http://en.opensuse.org/Git">http://en.opensuse.org/Git</a><br />
+[7]: <a href="http://en.opensuse.org/Git_Hosting">http://en.opensuse.org/Git_Hosting</a><br />
+[8]: <a href="https://hudson.dev.java.net/">https://hudson.dev.java.net/</a><br />
+[9]: <a href="http://labs.trolltech.com/blogs/2009/01/14/nokia-to-license-qt-under-lgpl/">http://labs.trolltech.com/blogs/2009/01/14/nokia-to-license-qt-under-lgpl/</a><br />
+[10]: <a href="http://download.opensuse.org/repositories/zypp:/Head/">http://download.opensuse.org/repositories/zypp:/Head/</a><br />
+[11]: <a href="http://en.opensuse.org/User:Visnov">http://en.opensuse.org/User:Visnov</a><br />
+[12]: <a href="http://en.opensuse.org/User:Jdsn">http://en.opensuse.org/User:Jdsn</a><br />
+[13]: <a href="http://www.github.com">http://www.github.com</a></p>

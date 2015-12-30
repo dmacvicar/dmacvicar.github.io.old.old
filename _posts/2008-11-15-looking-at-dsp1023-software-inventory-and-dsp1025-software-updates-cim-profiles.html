@@ -1,0 +1,68 @@
+---
+layout: post
+title: Looking at DSP1023 (Software Inventory) and DSP1025 (Software Updates) CIM
+  profiles
+date: 2008-11-15 00:15:42.000000000 +01:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- cim
+- newsuse
+- rpm
+- software
+- suse
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/looking-at-dsp1023-software-inventory-and-dsp
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48645116'
+  _oembed_bf19bbf132f5baff986ab0d4e520d9cb: "{{unknown}}"
+  _oembed_ad7fa4864d4748609fde8493f97cf218: "{{unknown}}"
+  _oembed_f2e925978f537cf45fe81272292ec93c: "{{unknown}}"
+  _oembed_11510380e712d14a549b24fca736b37c: "{{unknown}}"
+  _oembed_2731b332bf26c4bacb99f139ba698e60: "{{unknown}}"
+  _oembed_9301fd580e3351572eb1f6ea5a5ab6d3: "{{unknown}}"
+  _oembed_426e889d1c0b2bf83c24c771bab81409: "{{unknown}}"
+  _oembed_8214cfe9d72e678b7ad125af6f9dd97a: "{{unknown}}"
+  _oembed_27f8085e961532947362bc56e5bedd5f: "{{unknown}}"
+  _oembed_7e4d8b41833acd8a57e97a9255f827bd: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    Yesterday I sat together with [Stefan Haas][5] in front of the whiteboard and analyzed the specification of the [DSP1023 (Software Inventory)][1] and [DSP1025 (Software Updates)][2] [CIM profiles][4], from the [DMTF][3].</p>
+<p>Our goal was to understand it, and therefore we tried to map the concept to the knowledge we already have, which is Linux software management (which in turn can be reduced almost to packages :-). Here are our notes:</p>
+<p>(For simplicity, I am skipping the CIM_ prefix for all classes)</p>
+<p>### Packages</p>
+<p>Packages are represented as usual NVRs (name, version, release) using the SoftwareIdentity class.</p>
+<p>The url of the package is represented associating the SoftwareIdentity with url instances (SoftwareIdentityResources) trough a SAPAvailableForElement association. Products, subpackages and components can be modeled by using OrderedComponent class, which references the component and one member per instance.</p>
+<p>One can associate hardware (or any managed element) with software using ElementSoftwareIdentity</p>
+<p>### Repositories</p>
+<p>Repos are modeled by using SystemSpecificCollection and associated via HostedCollection to a system (that seems to be the local computer).</p>
+<p>Packages are associated to the repository via the MemberOfCollection class.</p>
+<p>Installed packages are represented by instances of InstalledSoftwareIdentity (which references the ComputerSystem where it is installed).</p>
+<p>### Groups, Patterns</p>
+<p>Just another software identity (for the group itself), and references the grouped identities using OrderedComponent instances (which has two fields, the GroupComponent and PartComponent, which reference the respective instances).</p>
+<p>### Dependencies</p>
+<p>If the target software does not have and instance, a SoftwareIdentity is created and isEntity set to false (kind of named dependency)<br />
+For dependencies that exists software collection, then OrderedDependency is  instantiated for each dependency and Antecedent and Dependent is filled)</p>
+<p>For installing the packages, a SoftwareInstallationService is needed.<br />
+Packages can be installed calling installFromSoftwareIdentity() (name, version release instance) or installFromByteStream() (like an rpm package).</p>
+<p>To define an installation service, the SoftwareInstallationService class need to specify what it supports by instantiating SoftwareInstallationServiceCapabilities (which has properties like the supported URI schemes), and then this capabilities are associated back to the service using ElementCapabilities.</p>
+<p>To define whether a package is compatible with a given target, one uses the TargetTypes array in the SoftwareIdentity class.</p>
+<p>If a SoftwareIdentity is available and there is some SoftwareInstallationService that is compatible (or capable) of installing it, a instance of the ServiceAffectsElement needs to be instantiated.</p>
+<p>Before actually installing or updating, the client checks if a SoftwareIdentity can be installed on a element, using the CheckSoftwareIdentity() method on the SoftwareInstallationService. You give this method the software itself, the collection and the target element. You get back a InstallCharacteristics with the details (for example if you need to reboot after installing or not).</p>
+<p>Once you start the operation using InstallFromSoftwareIdentity(), you get back a Job instance that represent the task. Also true for InstallFromByteStream(), but here you pass an Image instance instead of a SoftwareIdentity. There is a similar InstallFromURI operation too. (jobs are only returned if the service has async capabilities).</p>
+<p>The client can pass options to the install operation using InstallOptionValues.</p>
+<p>TODO: figure out ElementSoftwareStatus more.</p>
+<p>Additionally, you can [see how HP has implemented the inventory profile with rpm][6]. It has some useful information about which rpm tags belong to which classes properties for example.</p>
+<p>[1]: <a href="http://www.dmtf.org/standards/published_documents/DSP1023_1.0.0.pdf">http://www.dmtf.org/standards/published_documents/DSP1023_1.0.0.pdf</a><br />
+[2]: <a href="http://www.dmtf.org/standards/published_documents/DSP1025.pdf">http://www.dmtf.org/standards/published_documents/DSP1025.pdf</a><br />
+[3]: <a href="http://www.dmtf.org">http://www.dmtf.org</a><br />
+[4]: <a href="http://www.dmtf.org/standards/profiles/">http://www.dmtf.org/standards/profiles/</a><br />
+[5]: <a href="http://en.opensuse.org/User:Haass">http://en.opensuse.org/User:Haass</a><br />
+[6]: <a href="http://docs.hp.com/en/5992-1936/ar01s03.html">http://docs.hp.com/en/5992-1936/ar01s03.html</a></p>

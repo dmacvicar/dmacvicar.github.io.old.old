@@ -1,0 +1,65 @@
+---
+layout: post
+title: ycp is not only a language. YaST ruby bindings improvements
+date: 2007-11-23 19:51:11.000000000 +01:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- open-source
+- ruby
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48644468'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/ycp-is-not-only-a-language-yast-ruby-bindings
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    After quite lot of hacking nights, I managed to get some yast2 ruby bindings improvements working.</p>
+<p>You might know that ycp is not only a language, but a component technology. Every component using the YaST2 technology can be reused from other YaST components no matter what language they are written in, as long as there are bindings for that. That was the original intention of the ruby bindings.</p>
+<p>So for example, there is a component call Storage, which is written in the ycp language. The component (well, it is really a namespace, but YaST sees it as a namespace component) is located in /usr/share/YaST2/modules/Storage.ycp (.ybc for the bytecode compiled version) and offers some medium level functions that YaST uses.</p>
+<p>This component needs low level access to the system, for which there is another module called Libstorage ( located in /usr/share/YaST2/modules/LibStorage.pm ) which in this case is written in perl which is a language YaST supports as long as you follows some simple rules.</p>
+<p>The reason is because libstorage is a C++ library, and there is no easy way to bind it to the YaST environment, but as YaST supports perl, you can generate perl bindings for the C++ library and all the library functionality will be available to other components in YaST.</p>
+<p>So repeat after me. ycp is not only a language. It is a communication protocol, used by YaST component framework.</p>
+<p>So, with the ruby bindings, you where able to do:</p>
+<div class="CodeRay">
+<div class="code">
+<pre>require 'yast'
+
+m = YaST::Module.new(&quot;Storage&quot;)
+dp = m.GetDiskPartition(&quot;/dev/sda1&quot;)
+dp.each do | key, value |
+  puts &quot;#{key} #{value}&quot;
+end</pre>
+</div>
+</div>
+<p>But I was never happy with the syntax. The idea was that you construct a dynamic proxy for a YaST component and then call methods on it. This had some disadvantages:</p>
+<p>* If the component did not exist, you did not get an error till the method call<br />
+* It was not possible to do introspection to the component, because the methods call where implemented using the method_missing hook. So basically the proxy responded to all methods and only raised an error if the equivalent call to the YaST side was not possible.</p>
+<p>So I decided to look for a new approach. This is the result till now:</p>
+<div class="CodeRay">
+<div class="code">
+<pre>require 'yast'
+require 'ycp/storage'
+
+dp = YCP::Storage::GetDiskPartition(&quot;/dev/sda1&quot;)
+dp.each do | key, value |
+  puts &quot;#{key} #{value}&quot;
+end</pre>
+</div>
+</div>
+<p>Oh yes, you notice. First, there is no need to  instantiate the module, a classic require will do it. The bindings modify the built-in require method, so if you require something under ycp/, a module is created on the fly. A real module, a real symbol. You can also import it manually using YCP::import</p>
+<p>Now, you can do this:</p>
+<div class="CodeRay">
+<div class="code">
+<pre>puts YCP::Storage.methods</pre>
+</div>
+</div>
+<p>When the module is imported, the symbols are declared in the module, so you can ask for them in the module. I still need to work on other symbol types, but it should be straight forward.</p>
+<p>The last improvement is that I simplified the C part of the bindings a lot, and moved most of the magic to pure ruby code, which makes easier to work with.</p>
+<p>Next improvement, the other way around, making nicer how to call ruby components from any other component.</p>

@@ -1,0 +1,137 @@
+---
+layout: post
+title: The greatest unknown openSUSE 11.0 package management feature
+date: 2008-05-21 05:02:17.000000000 +02:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- fedora
+- newsuse
+- suse
+- yast
+- yum
+- zypp
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48644753'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/the-greatest-unknown-opensuse-110-package-man
+  _oembed_cbbeac222184680b5113cabbca57d4f3: "{{unknown}}"
+  _oembed_6a880a54f8f1b087f45b330a8c34bab0: "{{unknown}}"
+  _oembed_9a5210298d085c4f5954280921e323bd: "{{unknown}}"
+  _oembed_c9546d32a5621284d5f27569e8c79c30: "{{unknown}}"
+  _oembed_46808ebd6df38a9c53e35bbf16718ee3: "{{unknown}}"
+  _oembed_5b93dd2a4d32f10abb87beadf7ccc87e: "{{unknown}}"
+  _oembed_b0471963537c69b0320519602f761f6b: "{{unknown}}"
+  _oembed_76d9d1611d79340e783c9bb3aae86d82: "{{unknown}}"
+  _oembed_48a43f8057033956a6617ffbca5fe8f5: "{{unknown}}"
+  _oembed_c0c0540d2c4bdf994aae5c653a0c2cb3: "{{unknown}}"
+  _oembed_7605a9e0dd6bbd80aedde95db21dd4f7: "{{unknown}}"
+  _oembed_2731b332bf26c4bacb99f139ba698e60: "{{unknown}}"
+  _oembed_beef615ade42f185c7ecac8e9cd89e9b: "{{unknown}}"
+  _oembed_4c3c8c7059bbc36d3c1f2adcb2f77dd3: "{{unknown}}"
+  _oembed_65505566ca402a6ab734ca45917cecd4: "{{unknown}}"
+  _oembed_e0cc69f4146b5773867e61a836fa122a: "{{unknown}}"
+  _oembed_a17b306b67f5a17d39fcdba8c0d0d7f3: "{{unknown}}"
+  _oembed_bdaa6cb04b8276a5e9e533c303f15a74: "{{unknown}}"
+  _oembed_9472ae5b8d1b563e93ab9e8becf66dd8: "{{unknown}}"
+  _oembed_e017f62bbe529928635ec92187b75921: "{{unknown}}"
+  _oembed_700e324351292b56349e921b76784cd4: "{{unknown}}"
+  _oembed_26877441a77aed9062eaaa2dd4728f3c: "{{unknown}}"
+  _oembed_be3aea46bd05d1a26dbee82246c3733a: "{{unknown}}"
+  _oembed_22be70f7170da84d5cb94eb0c05dcd66: "{{unknown}}"
+  _oembed_017ca52a9840ffa52b0dba7ad4822b7d: "{{unknown}}"
+  _oembed_3ee0e9149c8d51c127fa4503459e4c82: "{{unknown}}"
+  _oembed_bbb33f96a9fc776c6a2bec3cb333a28e: "{{unknown}}"
+  _oembed_606728973c5cd6ec225ea578dd4b041f: "{{unknown}}"
+  _oembed_327e7ad8311989dc59465befd6a9f88d: "{{unknown}}"
+  _oembed_2e79c6645474cab463fb31a6516fecc4: "{{unknown}}"
+  _oembed_3dcef4d0eef99ca27a3a829465005b42: "{{unknown}}"
+  _oembed_6ccdbfa72213d444e8e7f9d2127eb00e: "{{unknown}}"
+  _oembed_be1eae7b2412c5fcfd2791c35887f0ed: "{{unknown}}"
+  _oembed_11faaf5d143b0b158f6e6cb0ccd85693: "{{unknown}}"
+  _oembed_08b622072ad563d7b2e9e902efdafc16: "{{unknown}}"
+  _oembed_30440e0fd292579e913b512135727e98: "{{unknown}}"
+  _oembed_a12c8bf1a79060bab1137a5dee83ec58: "{{unknown}}"
+  _oembed_4ad3e1d040a234a74cff58e8bceab878: "{{unknown}}"
+  _oembed_7c0cfdc475011df11f86bced2700fbef: "{{unknown}}"
+  _oembed_a7b0accfaf40e73113252358b2d0b563: "{{unknown}}"
+  _oembed_293c40307986aad60f1318c7e0fd3085: "{{unknown}}"
+  _oembed_e5698a39e07b473e0a6d81742b22b60d: "{{unknown}}"
+  _oembed_25ab973d94f3e0258e4cb44c5559f80b: "{{unknown}}"
+  _oembed_09b3157585cb1e7851aba30bf3465664: "{{unknown}}"
+  _oembed_b68d7f11c39990b903a2931e1022c06c: "{{unknown}}"
+  _oembed_27f8085e961532947362bc56e5bedd5f: "{{unknown}}"
+  _oembed_9ed170a7b4499d77a88a6efdb166e733: "{{unknown}}"
+  _oembed_30565d6fb1f04c3f1758fcd496ceae7b: "{{unknown}}"
+  _oembed_f570e0641a82f479ff9258cdcb07f14a: "{{unknown}}"
+  _oembed_2e40343235305310ffc59ce0a0d8a4f9: "{{unknown}}"
+  _oembed_4e020b22eba0ca883efe9a652ec30672: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    During the development of openSUSE 11.0, we have been reporting in real time cool improvements like the [fast installation][4], [how YaST became sexy][5], [how YaST/ZYpp/zypper became fast][1], [how YaST/ZYpp/zypper performs better than others][2] and even [that our solver is also really smart][3].</p>
+<p>However, there is something else...</p>
+<p>## Interoperability</p>
+<div class="p_embed p_image_embed">
+<img alt="Media_httpimg232image_yfnpi" height="333" src="{{ site.baseurl }}/assets/media_httpimg232image_yfnpi-scaled500.jpg?w=300" width="500" />
+</div>
+<p>### Background</p>
+<p>One of the features of our stack is the availability of patches and patterns. The first provide updates in a sense of "fix for a problem" (which can mean various, or none updated packages), while patterns are intelligent groups that can recommend, require and suggest packages in order to make certain functionality available, without being too strict in the specific packages to install.</p>
+<p>Unlike in other systems where groups and updates are handled as special entities, ZYpp patterns and patches are just objects with dependencies like packages, and the solver threats them in the same way.</p>
+<p>Because rpm installed packages database does not know about patterns and patches, in openSUSE 10.x (and SLE10) those objects are installed in a separate database, only viewable to libzypp. This is hidden to the users, but does not allow for easy management using 3rd party tools.</p>
+<p>In addition to that, the patch metadata format is our own extension to the [metadata][7] handled by [yum][6], the tool used by Fedora and Centos. That means, even if other distribution provide similar concepts, they will mostly ignore our extended metadata.</p>
+<p>This is sad, if we share 90% of the metadata format, why not go further?. Sometimes it is no worth to wait that others do steps in becoming more interoperable with you, so what about doing those steps ourselves?</p>
+<p>At this time, Fedora was implementing updates metadata by using a yum plugin and a updateinfo.xml description. Metadata for deltarpm availability is handled via the yum-presto plugin.</p>
+<p>### Sharing tools and data, a step for Interoperability</p>
+<p>#### Metadata format</p>
+<p>In openSUSE 11.0, ZYpp reads patches from updateinfo.xml too! ([check 11.0 update repo!][17]). Not only that, our delta rpm availability metadata will be in the same format [yum-presto][9] (with some modifications agreed with its author).</p>
+<p>How will this benefit you?</p>
+<p>* You will be able to use yum stack with updates out of the box with updates and deltarpms, and they will just work.<br />
+* You will be able to generate custom patches for openSUSE using existing tools like [Bodhi][8], from Fedora, or generate custom deltarpm information using the yum-presto included tools.<br />
+* We are working hard to get the [ZYpp/YaST stack to build on Fedora][10] (and other distros), in a near future, you will be able to enjoy ZYpp performance and features on Fedora with their own repositories!<br />
+* We decoupled the delta-rpm information from patches, so we may start adding delta-rpm to normal factory packages and it will start to work out of the box!<br />
+* Much more!</p>
+<p>#### Handling of patches and patterns</p>
+<p>As we mentioned, in 10.x codebase we used to install patterns and patches in a special database. This is no longer the case.</p>
+<p>Patterns and patches are no longer installed, which means your system is rpm only! Patches are shown now as (un)satisfied (and (un)relevant). Which means you have all the requirements to consider them present.</p>
+<p>All the information of patches and patterns (and products) is extra information that openSUSE applications use to add more value to you. So if you for example remove a repository offering patches, then you just lose the information about which patches do you have, the real information is the rpm packages you have installed. When you re-add the update repository, and you can immediately see which patches published affect you, which ones are irrelevant, and which ones are relevant but you don't need because your packages are up to date.</p>
+<p>Patterns and patches become "advice" and "value", not extra non-compatible information.</p>
+<p>How will this benefit you?</p>
+<p>* Simpler system.<br />
+* No conflicts because using 3rd party tools, "rpm by hand" or our native tools.</p>
+<p>#### openSUSE, PackageKit enabled</p>
+<p>[PackageKit][11] is the new actor in the package management world. It is a thin layer that provides applications access to the package management system as a [DBUS][14] service. You may heard about it because Fedora 9 is coming PackageKit enabled. How it benefits you?</p>
+<p>* Role based (non-root) package management, via [PolicyKit][15].<br />
+* Sharing of upstream tools across distributions.<br />
+* Gives the desktop the chance to integrate with software manipulation.</p>
+<p>So, openSUSE 11.0 is fully PackageKit enabled. You will be able to use all [PackageKit compatible applications][16] on openSUSE and they will use the ZYpp stack underneaths. Not only that it is enabled, but our hackers [Scott Reeves][13] and [Stefan Haas][14] did an amazing job on the backend, I would dare to say it is one of the most robust backend implementations, and it fully benefits from the ZYpp speed and features.</p>
+<p>### Future</p>
+<p>All this improvements are available now. May be you are already enjoying them in Factory. However this opens the door for new possibilities, just a few examples come to mind:</p>
+<p>* The openSUSE Build Service, the great software building platform from our openSUSE team, builds packages for all major distributions since long time. The build service could allow to enter and generate patch information for fixed bugs and the update/patch information will be compatible across yum/Fedora and openSUSE. Same with deltarpm information.<br />
+* We could extend ZYpp parser to understand Fedora groups stored in comps.xml and threat them as patterns.<br />
+* Do you have more ideas?</p>
+<p>### Community involvement</p>
+<p>We welcome any help on creating more interoperability possibilities, especially about building the ZYpp stack and YaST on Fedora, Mandriva and others. There are already some packages building in the build service, but we still have a long way to go.</p>
+<p> [1]: <a href="http://duncan.mac-vicar.com/blog/archives/296">http://duncan.mac-vicar.com/blog/archives/296</a><br />
+ [2]: <a href="http://duncan.mac-vicar.com/blog/archives/309">http://duncan.mac-vicar.com/blog/archives/309</a><br />
+ [3]: <a href="http://duncan.mac-vicar.com/blog/archives/311">http://duncan.mac-vicar.com/blog/archives/311</a><br />
+ [4]: <a href="http://www.kdedevelopers.org/node/3385">http://www.kdedevelopers.org/node/3385</a><br />
+ [5]: <a href="http://www.kdedevelopers.org/node/3143">http://www.kdedevelopers.org/node/3143</a><br />
+ [6]: <a href="http://en.wikipedia.org/wiki/Yellow_dog_Updater%2C_Modified">http://en.wikipedia.org/wiki/Yellow_dog_Updater%2C_Modified</a><br />
+ [7]: <a href="http://linux.duke.edu/projects/metadata/">http://linux.duke.edu/projects/metadata/</a><br />
+ [8]: <a href="http://fedorahosted.org/bodhi">http://fedorahosted.org/bodhi</a><br />
+ [9]: <a href="http://hosted.fedoraproject.org/presto">http://hosted.fedoraproject.org/presto</a><br />
+ [10]: <a href="http://download.opensuse.org/repositories/zypp:/Backport/Fedora_8/">http://download.opensuse.org/repositories/zypp:/Backport/Fedora_8/</a><br />
+ [11]: <a href="http://www.packagekit.org/">http://www.packagekit.org/</a><br />
+ [12]: <a href="http://en.opensuse.org/User:Haass">http://en.opensuse.org/User:Haass</a><br />
+ [13]: <a href="http://en.opensuse.org/User:Sreeves1">http://en.opensuse.org/User:Sreeves1</a><br />
+ [14]: <a href="http://freedesktop.org/wiki/Software/dbus">http://freedesktop.org/wiki/Software/dbus</a><br />
+ [15]: <a href="http://hal.freedesktop.org/docs/PolicyKit/index.html">http://hal.freedesktop.org/docs/PolicyKit/index.html</a><br />
+ [16]: <a href="http://www.packagekit.org/pk-screenshots.html">http://www.packagekit.org/pk-screenshots.html</a><br />
+ [17]: <a href="http://download.opensuse.org/update/11.0">http://download.opensuse.org/update/11.0</a></p>

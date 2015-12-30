@@ -1,0 +1,49 @@
+---
+layout: post
+title: Compiling Octave Workshop in SUSE
+date: 2006-07-17 03:51:29.000000000 +02:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- newsuse
+- open-source
+- software
+- suse
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48589257'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/compiling-octave-workshop-in-suse
+  _oembed_22d530aa7eab06037001683dce01bb49: "{{unknown}}"
+  _oembed_5cb010240f93605b483051cb7aca3f67: "{{unknown}}"
+  _oembed_6836a9cac9a910e86fe84154f6a2b1fd: "{{unknown}}"
+  _oembed_f4ab0c335e0728f1762ea3673bbbaf29: "{{unknown}}"
+  _oembed_4ab2506b9258bfcd2e284e27706fd2f7: "{{unknown}}"
+  _oembed_ea5304da63d7c777d037499b00b46e1a: "{{unknown}}"
+  _oembed_e74253a411ecb634278be94ee32c4ac2: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    [Octave Workshop][3] is a nice Qt 4 GUI for [GNU Octave][2], a Matlab like numerical computation tool.</p>
+<p>![Graph sombrero][4]</p>
+<p>To compile it in SUSE 10.1, get [this patch][1] and apply it to your installed Octave 2.1.72 headers:</p>
+<p><code><br />
+  linux:/usr/include/octave-2.1.72/octave # cat /home/duncan/octave.patch | patch -p0<br />
+  patching file ArrayN.h<br />
+  patching file DiagArray2.h<br />
+</code></p>
+<p>Then in Octave Workshop, replace the assert for QT_ASSERT in octave-workshop-0.10/editwindow.cpp</p>
+<p><code><br />
+  -      assert(editors.find(current)!=editors.end());<br />
+  +      Q_ASSERT(editors.find(current)!=editors.end());<br />
+</code></p>
+<p>then it should compile.</p>
+<p> [1]: <a href="http://velveeta.che.wisc.edu/octave/lists/archive//octave-maintainers.2006/msg00561.html">http://velveeta.che.wisc.edu/octave/lists/archive//octave-maintainers.2006/ms...</a><br />
+ [2]: <a href="http://www.octave.org">http://www.octave.org</a><br />
+ [3]: <a href="http://www.math.mcgill.ca/loisel/octave-workshop/">http://www.math.mcgill.ca/loisel/octave-workshop/</a><br />
+ [4]: <a href="http://www.gnu.org/software/octave/images/sombrero.jpg">http://www.gnu.org/software/octave/images/sombrero.jpg</a></p>

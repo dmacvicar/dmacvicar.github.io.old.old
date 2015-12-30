@@ -1,0 +1,121 @@
+---
+layout: post
+title: Introducing enhancerepo 0.3
+date: 2008-09-26 20:30:20.000000000 +02:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- newsuse
+- rpmmd
+- software
+- suse
+- yum
+- zypp
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48644949'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/introducing-enhancerepo-03
+  _oembed_b79c04e6c3d1ab537f26ce5be65fcea7: "{{unknown}}"
+  _oembed_7331ed74843dbffc57980e71301d103f: "{{unknown}}"
+  _oembed_b0471963537c69b0320519602f761f6b: "{{unknown}}"
+  _oembed_5dac7ce4885c2f1187b55d6356cd1a19: "{{unknown}}"
+  _oembed_a2e554f36fc76464649bed7eea25c5b4: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    ## Introduction</p>
+<p>You may know that we are slowly heading to use the [rpmmd][1] format as the default one. We already do for the build service since the beginning, and the only remaining part is the media.</p>
+<p>Therefore, we have been following an strategy of, at the same time, extending rpmmd with our own extensions, but at the same time, talk to the yum people in order to think in more long term about changes in the format.</p>
+<p>Right now, in the openSUSE 11.1Beta code, you find the [following extensions][2]:</p>
+<p>* updateinfo.xml (patches, same Format as Fedora)<br />
+* deltainfo.xml (delta-rpms, same format as yum-presto, different name)<br />
+* suseinfo.xml (repository extra data)<br />
+* susedata.xml (package extra data, like eulas and disk usage per mount point)</p>
+<p>Apart of that, we sign our repositories.</p>
+<p>Even for testing our own stuff, it became tedious to add extra metadata to repositories created with [createrepo][3].</p>
+<p>## enhancerepo</p>
+<p>[Enhancerepo][5] allows you to inject all the extra metadata to repositories in an easy way. It takes care of updating the index and compressing the files.</p>
+<p>### Features</p>
+<p>* Sign repositories<br />
+* Generate eulas from text files with certain name conventions (package.eula)<br />
+* Generate keywords from text files with certain name conventions (package.eula)<br />
+* Add disk usage per mount point information<br />
+* Add repository expiration time (for outdated mirror autodetection)<br />
+* (expermental and incomplete) generation of updateinfo.xml</p>
+<p>### Usage</p>
+<div class="CodeRay">
+<div class="code">
+<pre>Usage
+-----
+enhancerepo [OPTION] ... DIR
+
+-h, --help:
+
+   show help
+
+--sign keyid
+
+   Generates signature for the repository
+   using key keyid
+
+--updates
+
+   Add updates from *.updates files
+   and generate updateinfo.xml
+
+SUSE specific repository data (suseinfo.xml):
+--expire time
+
+  Set repository expiration hint
+  (Can be used to detect dead mirrors)
+
+--repo-product prodname:
+
+   Adds product compatibility information
+
+--repo-keyword keyword
+
+   Tags repository with keyword
+
+SUSE specific package data (susedata.xml)
+--eulas
+
+   Drop packagename.eula files and
+   the attributes will be added to susedata.xml
+
+--keywords
+
+   Drop packagename.keywords files and
+   the attributes will be added to susedata.xml
+
+--disk-usage
+
+   Add disk usage information
+   the attributes will be added to susedata.xml
+
+Note: your .eula or .keywords file will be added to a package if it
+matches its name. If you want to add the attributes to a specific
+package, name the file name-version, name-version-release or
+name-version-release.arch
+
+DIR: The repo base directory ( where repodata/ directory is located )</pre>
+</div>
+</div>
+<p>### Download</p>
+<p>Packages available [here][4].</p>
+<div class="CodeRay">
+<div class="code">
+<pre>git clone git://git.opensuse.org/projects/enhancerepo</pre>
+</div>
+</div>
+<p> [1]: <a href="http://en.opensuse.org/Standards/Rpm_Metadata">http://en.opensuse.org/Standards/Rpm_Metadata</a><br />
+ [2]: <a href="http://en.opensuse.org/Standards/Rpm_Metadata#Proposed_Extensions">http://en.opensuse.org/Standards/Rpm_Metadata#Proposed_Extensions</a><br />
+ [3]: <a href="http://linux.duke.edu/projects/metadata/">http://linux.duke.edu/projects/metadata/</a><br />
+ [4]: <a href="http://software.opensuse.org/search?q=enhancerepo">http://software.opensuse.org/search?q=enhancerepo</a><br />
+ [5]: <a href="http://en.opensuse.org/Enhancerepo">http://en.opensuse.org/Enhancerepo</a></p>

@@ -1,0 +1,89 @@
+---
+layout: post
+title: Modernizing Spacewalk's user interface
+date: 2013-10-30 14:49:18.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Software
+tags:
+- bootstrap
+- css
+- html5
+- less
+- spacewalk
+- suse
+- suse manager
+meta:
+  _edit_last: '34818'
+  draftfeedback_requests: a:3:{s:16:"csanchez@suse.de";a:3:{s:3:"key";s:13:"5270d649b2076";s:4:"time";s:10:"1383126601";s:7:"user_id";s:5:"34818";}s:13:"527108e7649d2";a:3:{s:3:"key";s:13:"527108e7649d2";s:4:"time";s:10:"1383139559";s:7:"user_id";s:5:"34818";}s:13:"52710b0acfd86";a:3:{s:3:"key";s:13:"52710b0acfd86";s:4:"time";s:10:"1383140106";s:7:"user_id";s:5:"34818";}}
+  draft_feedback: |-
+    a:1:{s:13:"527108e7649d2";a:2:{i:0;a:2:{s:4:"time";s:10:"1383140286";s:7:"content";s:457:"A couple of typos:
+
+    miss-behaving -> should be misbehaving http://en.wiktionary.org/wiki/misbehave
+
+    Now our main goal is a first merge upstream -> Now our main goal is a first upstream merge
+
+
+
+    Apart from those, the article looks and reads great. I hope this will be enough to convince them! Be sure to have a look at git history, usually some squashing or reordering of commits helps.
+
+    I am available if you need any further help on this, of course.
+
+
+    moio";}i:1;a:2:{s:4:"time";s:10:"1383140597";s:7:"content";s:385:" The main goals should be ordered differently. Mobile is certainly not the main goal, but
+    - customization
+    - modern look
+    - consistency with other SUSE products.
+
+    Did we tweet/blog about the department workshop ? Then add a link !
+
+    For 'what do we have right now', please add pages ported from Perl to Java.
+
+    What should the last picture say ? It looks like almost identical screenshots.";}}}
+  _thumbnail_id: '1743'
+  _publicize_pending: '1'
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p><a title="Spacewalk home page" href="http://spacewalk.redhat.com/">Spacewalk</a> is <a title="SUSE Manager home page" href="https://www.suse.com/products/suse-manager/">SUSE Manager</a> upstream project. We base our product on Spacewalk's codebase and <a title="gmane search" href="http://goo.gl/0xmYWv">contribute features and fixes back</a>.</p>
+<p><a href="http://duncan.files.wordpress.com/2013/10/screenshot-from-2013-10-30-094209.png"><img class="alignnone size-large wp-image-1725" alt="Screenshot from 2013-10-30 09:42:09" src="{{ site.baseurl }}/assets/screenshot-from-2013-10-30-094209.png?w=300" width="300" height="168" /></a></p>
+<p>There are lot of advantages of working in a mature codebase. At the same time, you get to work everyday with legacy code.</p>
+<p>We want SUSE Manager to look great and behave like a modern web application. We want it to survive a rapidly changing environment that gives you new challenges like mobile. Our main goals were:</p>
+<ul>
+<li>Better mobile responsiveness</li>
+<li>A standard and documented CSS framework as a base</li>
+<li>Easier customization of the CSS (e.g. <a title="LESS" href="http://lesscss.org/">LESS</a>)</li>
+<li>Deprecate the <a href="http://prototypejs.org/">Prototype</a> library and use <a href="http://jquery.com/">JQuery</a></li>
+<li>Nicer icons</li>
+</ul>
+<p>The topic was first discussed as <a title="Future of the development stack?" href="https://www.redhat.com/archives/spacewalk-devel/2013-June/msg00003.html">"what could we do"</a> in order to keep everything current and relevant. Then <a title="Twitter Bootstrap: Standardizing the CSS framework?" href="https://www.redhat.com/archives/spacewalk-devel/2013-July/msg00024.html">we presented a quick prototype</a> migrating the user interface to something based on <a title="Bootstrap 2.3.2" href="http://getbootstrap.com/2.3.2/">Twitter Bootstrap</a>. This is what the prototype looked like:</p>
+<p><a href="http://duncan.files.wordpress.com/2013/10/manager_bootstrap_default_1.jpg"><img class="size-full wp-image" id="i-1723" alt="Image" src="{{ site.baseurl }}/assets/manager_bootstrap_default_1.jpg?w=487" /></a></p>
+<p>The idea was well received. There were (valid) concerns. Spacewalk is a huge application, and a refactoring like this was going to be an intrusive change.</p>
+<p>For our department workshop, we assembled a squad and did a very succesful first iteration. We managed to port the main structure and also get a first Spacewalk "black theme". Some of us continued for the <a title="SUSE Hackweek" href="https://hackweek.suse.com/">SUSE Hackweek</a>. After that we integrated the development into our main sprints and at some point we started <a title="bootstrap-css branch" href="https://git.fedorahosted.org/cgit/spacewalk.git/log/?h=bootstrap-css">pushing our branch to upstream</a>.</p>
+<p>What do we have right now?</p>
+<ul>
+<li>A mobile responsive layout based on <a title="Bootstrap 3" href="http://getbootstrap.com/">Bootstrap 3</a>, the <a title="Bootstrap Boom" href="http://www.ostraining.com/blog/webdesign/bootstrap-boom/">most popular</a> CSS framework.</li>
+<li>Scalable font-based icons powered by <a title="Font Awesome" href="http://fortawesome.github.io/Font-Awesome/">Font Awesome 4</a></li>
+<li>A beautiful Spacewalk "black theme"</li>
+<li>Most of the code was refactored towards HTML5, current CSS, jQuery and LESS.</li>
+</ul>
+<p><img class="size-large" alt="laptop-mobile" src="{{ site.baseurl }}/assets/laptop-mobile.jpg?w=600" width="300" height="190" /></p>
+<p><a href="http://duncan.files.wordpress.com/2013/10/what-we-have-screenshot-002.jpg"><img class="alignnone size-large wp-image-1745" alt="what-we-have-screenshot-002" src="{{ site.baseurl }}/assets/what-we-have-screenshot-002.jpg?w=300" width="300" height="186" /></a> <a href="http://duncan.files.wordpress.com/2013/10/what-we-have-screenshot-001.jpg"><img class="alignnone size-large wp-image-1744" alt="what-we-have-screenshot-001" src="{{ site.baseurl }}/assets/what-we-have-screenshot-001.jpg?w=300" width="300" height="187" /></a></p>
+<p><img class="alignnone size-large wp-image-1742" alt="spacewalk-mobile" src="{{ site.baseurl }}/assets/spacewalk-mobile.jpg?w=300" width="300" height="179" /></p>
+<p>More detailed screenshots of how it looked before on mobile <a title="mobile before 1" href="http://duncan.files.wordpress.com/2013/10/screenshot_2013-10-30-10-08-29.png">1</a> &amp; <a title="mobile before 2" href="http://duncan.files.wordpress.com/2013/10/screenshot_2013-10-30-10-09-04.png">2</a>. How it looks now: <a title="mobile after 1" href="http://duncan.files.wordpress.com/2013/10/screenshot_2013-10-30-10-07-13.png">1</a> &amp; <a title="mobile after 2" href="http://duncan.files.wordpress.com/2013/10/screenshot_2013-10-30-10-07-42.png">2</a> &amp; <a title="mobile after 3" href="http://duncan.files.wordpress.com/2013/10/screenshot_2013-10-30-10-07-50.png">3</a> &amp; <a title="mobile after 4" href="http://duncan.files.wordpress.com/2013/10/screenshot_2013-10-30-10-07-56.png">4</a></p>
+<p>There are still some items in our backlog:</p>
+<ul>
+<li>Un-styled pages here and there</li>
+<li>Cosmetic details due to "misbehaving" html (manual breaks, inline styles)</li>
+<li>Custom tags unit tests (WIP)</li>
+<li>Perl-part data list widget (but the layout is there)</li>
+<li>Replacing gifs with icons (WIP)</li>
+</ul>
+<p>Now our main goal is a first upstream merge so that we can continue working on this without blocking other features where we want to take advantage of the base user interface.</p>
+<p>I hope you enjoyed this report. I will follow up with a more technical post detailing some refactorings and how we automated some tedious changes.</p>

@@ -1,0 +1,85 @@
+---
+layout: post
+title: Poor man's rollback
+date: 2012-01-19 17:55:39.000000000 +01:00
+type: post
+published: true
+status: publish
+categories:
+- Software
+tags:
+- opensuse
+- suse
+- zypp
+- zypper
+meta:
+  _edit_last: '34818'
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>By <a href="http://www.wafaa.eu/">Andrew Wafaa</a>'s <a href="https://twitter.com/#!/awafaa/status/160030399135883265">request</a>.</p>
+<p>Save the package list:</p>
+<p><code><br />
+dmacvicar@piscola:~&gt; rpm -qa --queryformat="%{name}\n" &gt; 1<br />
+</code></p>
+<p>Do something... like uninstalling what was cool last week and it is not cool anymore:</p>
+<p><code><br />
+dmacvicar@piscola:~&gt; sudo zypper rm erlang<br />
+Loading repository data...<br />
+Reading installed packages...<br />
+Resolving package dependencies...</p>
+<p>The following packages are going to be REMOVED:<br />
+  erlang rabbitmq-server </p>
+<p>2 packages to remove.<br />
+After the operation, 51.3 MiB will be freed.<br />
+Continue? [y/n/?] (y): y<br />
+Removing rabbitmq-server-2.2.0-1.2 [done]<br />
+Removing erlang-R14B-1.2 [done]<br />
+There are some running programs that use files deleted by recent upgrade. You may wish to restart some of them. Run 'zypper ps' to list these programs.<br />
+</code></p>
+<p>Save the new state:</p>
+<p><code><br />
+dmacvicar@piscola:~&gt; rpm -qa --queryformat="%{name}\n" &gt; 2<br />
+</code></p>
+<p>Now you need to know that zypper accepts + and - in its input. You can install and uninstall packages in one go:</p>
+<p><code><br />
+zypper in -- +pkg1 -pkg2 +pkg3 ...<br />
+</code></p>
+<p>So we can diff both files:</p>
+<p><code><br />
+dmacvicar@piscola:~&gt; diff -u 1 2<br />
+--- 1	2012-01-19 17:23:26.640180000 +0100<br />
++++ 2	2012-01-19 17:24:43.196248000 +0100<br />
+@@ -420,7 +420,6 @@<br />
+ gnome-themes-accessibility<br />
+ libeet1<br />
+ icc-profiles-mini<br />
+-rabbitmq-server<br />
+ kde4-filesystem<br />
+ gpg-pubkey<br />
+ libiptcdata-lang<br />
+@@ -3561,7 +3560,6 @@<br />
+ perl-Config-General<br />
+ PolicyKit-devel<br />
+ gtk2-engine-aurora<br />
+-erlang<br />
+ libeet-devel<br />
+ cyrus-sasl-gssapi<br />
+ libimobiledevice2<br />
+</code></p>
+<p>Close to what we need. We remove the context lines by using -u0 and we remove the 3 first lines:</p>
+<p><code><br />
+dmacvicar@piscola:~&gt; diff -u0 1 2 | grep -Ev '^(@@|\+\+|--)'<br />
+-rabbitmq-server<br />
+-erlang<br />
+</code></p>
+<p>Now feed zypper with this to get your packages back:</p>
+<p><code><br />
+zypper in -- $(diff -u0 2 1 | grep -Ev '^(@@|\+\+|--)' | xargs)<br />
+</code></p>
+<p>Of course this only will work if you have all repositories. It is also useful to sync packages across computers (like you get a new laptop and need to setup it in a similar way).</p>
+<p>openSUSE 12.1 rollback is implemented using btrfs via snapper, plus a zypp plugin that records a snapshot on every commit. It should be possible to write a Poor's man version by recording the package list on every commit and then performing the above operation to go one or more steps back.</p>

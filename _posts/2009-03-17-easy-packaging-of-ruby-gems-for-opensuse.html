@@ -1,0 +1,44 @@
+---
+layout: post
+title: Easy packaging of ruby gems for openSUSE
+date: 2009-03-17 05:49:26.000000000 +01:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- newsuse
+- ruby
+- software
+- suse
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48645371'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/easy-packaging-of-ruby-gems-for-opensuse
+  _oembed_f80e601feefbbe17aa70993c7fc530d9: "{{unknown}}"
+  _oembed_173215198cd17a6abf622c9885813ebf: "{{unknown}}"
+  _oembed_e6b6a5ecf66b7e2d47e89af82efc65b6: "{{unknown}}"
+  _oembed_ee4c5fa730743dff1f1634ac742d747a: "{{unknown}}"
+  _oembed_ebcd80f0b4fd98800ed7869fbe339e32: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    Every distribution has its own conventions to package scripting languages addons (perl modules, ruby gems, etc) as native packages. This allows packages to depend on those addons honoring the package dependencies, and at the same time, look like the addon was installed the scripting language tool (cpan, gem).</p>
+<p>openSUSE keeps a [repository of gems][2], thanks to [Marcus Rueckert][5].</p>
+<p>For ruby, David Lutterkort ([augeas][4] lead developer) created a [nice tool][1] to help converting gems into spec files.</p>
+<p>I created a template for openSUSE-like rubygem-* packages, and David [committed it upstream][3].</p>
+<p>So, to create a package for a gem:</p>
+<p>Fetch it:</p>
+<p>    gem fetch foo</p>
+<p>Convert it:</p>
+<p>    gem2rpm -t opensuse.spec.template ./foo-1.1.gem &gt; rubygem-foo.spec</p>
+<p>Build and tweak it. Make sure everything is alright. Some gems work out of the box, some not, but still gem2rpm saves 90% of the effort. Consider submitting it to the [project][2] if you are willing to keep it up to date ;-)</p>
+<p>[1]: <a href="http://rubyforge.org/projects/gem2rpm">http://rubyforge.org/projects/gem2rpm</a><br />
+[2]: <a href="http://download.opensuse.org/repositories/devel:/languages:/ruby:/extensions">http://download.opensuse.org/repositories/devel:/languages:/ruby:/extensions</a><br />
+[3]: <a href="http://gem2rpm.rubyforge.org/svn/trunk/opensuse.spec.template">http://gem2rpm.rubyforge.org/svn/trunk/opensuse.spec.template</a><br />
+[4]: <a href="http://www.augeas.net">http://www.augeas.net</a><br />
+[5]: <a href="http://en.opensuse.org/User:Darix">http://en.opensuse.org/User:Darix</a></p>

@@ -1,0 +1,60 @@
+---
+layout: post
+title: Hackweek II (Day 3)
+date: 2007-06-27 23:23:27.000000000 +02:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- ruby
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48644205'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/hackweek-ii-day-3
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    So today SCR (system configuration repository) works from Ruby. Also if you call Ruby from YCP and the Ruby module calls YaST, Ruby can't find the library. I fixed that.</p>
+<div class="CodeRay">
+<div class="code">
+<pre>require 'yast'
+
+m = YaST::Module.new(&quot;SCR&quot;)
+m.Execute(&quot;.target.bash&quot;, &quot;firefox&quot;)</pre>
+</div>
+</div>
+<p>Will launch firefox</p>
+<div class="CodeRay">
+<div class="code">
+<pre>require 'yast'
+
+m = YaST::Module.new(&quot;SCR&quot;)
+modules = m.Read(&quot;.proc.modules&quot;)
+modules.each do | k, v |
+  puts &quot;#{k}:&quot;
+  v.each do | a, b |
+    puts &quot;    #{a} - #{b}&quot;
+  end
+end</pre>
+</div>
+</div>
+<p>Will output:</p>
+<div class="CodeRay">
+<div class="code">
+<pre>de_cd:
+    size - 40608
+    used - 0
+cdrom:
+    size - 36896
+    used - 2
+ehci_hcd:
+    size - 34956
+    used - 0
+... (more)</pre>
+</div>
+</div>

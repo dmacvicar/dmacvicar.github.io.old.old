@@ -1,0 +1,31 @@
+---
+layout: post
+title: zypp on factory
+date: 2007-03-07 03:45:02.000000000 +01:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- newsuse
+- suse
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48643942'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/zypp-on-factory
+  _oembed_2a356084e0a13860a0995a45e281fc1f: "{{unknown}}"
+  _oembed_4e2a01879c2db7969a5268d9d76a7594: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    This week we are integrating a new libzypp which uses a new build system and a new .so version, which will be the base to integrate 10.3 features.</p>
+<p>This uncovered some problems with link order and static initialization which we are solving this week. So it is very likely applications will crash/segfault.</p>
+<p>The integration of new packages had some effect in zypp stack. Like a curl bug affecting ftp source probing, which is [now fixed][1].</p>
+<p>So be careful, I'd recommend to install / update the package manager stack only in a virtual machine this week.</p>
+<p>Also, we updated [the instructions how to build][2] for this new series.</p>
+<p> [1]: <a href="http://article.gmane.org/gmane.comp.web.curl.cvs/6893">http://article.gmane.org/gmane.comp.web.curl.cvs/6893</a><br />
+ [2]: <a href="http://en.opensuse.org/Libzypp/Devel">http://en.opensuse.org/Libzypp/Devel</a></p>

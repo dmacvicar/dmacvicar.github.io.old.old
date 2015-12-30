@@ -1,0 +1,104 @@
+---
+layout: post
+title: Solving the famous "smart" case 2
+date: 2008-05-17 05:16:07.000000000 +02:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- newsuse
+- smart
+- software
+- suse
+- yast
+- yum
+- zypp
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48644713'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/solving-the-famous-smart-case-2
+  _oembed_c06e40479ff8ef50bf4b26d94c70c123: "{{unknown}}"
+  _oembed_c5f768a3e7c9f0c5f1e48dea5f554cff: "{{unknown}}"
+  _oembed_6a880a54f8f1b087f45b330a8c34bab0: "{{unknown}}"
+  _oembed_18e3ff9c7f97df9f559335d0cef4d9ff: "{{unknown}}"
+  _oembed_9c58c4ca6641515d66b964b6f0b28b2a: "{{unknown}}"
+  _oembed_612aecf00c2d7ce1451ff0588ef80dde: "{{unknown}}"
+  _oembed_cf34165c7614590c22aa4ea8271b09d9: "{{unknown}}"
+  _oembed_0ce89c2954824495734f9e893b7e2ec3: "{{unknown}}"
+  _oembed_3431da778fbf9aaa757fbd43a9f588ae: "{{unknown}}"
+  _oembed_30440e0fd292579e913b512135727e98: "{{unknown}}"
+  _oembed_f70fee8c2f6c83c1e539c599e2a92a2b: "{{unknown}}"
+  _oembed_77fbb14b5b7f067b1d4809ce9ecadf62: "{{unknown}}"
+  _oembed_095059bd85d579266475b24ddf8edcb9: "{{unknown}}"
+  _oembed_a6480afbcb268a1b2ba1991b9238b2fc: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    In my [recent post about ZYpp, yum and smart][2] speed and memory usage, [I got this comment][3]:</p>
+<p>&gt;It would be also interesting to know how the new libzypp manages the &ldquo;Case Studies&rdquo; from [<a href="http://svn.labix.org/smart/trunk/README">http://svn.labix.org/smart/trunk/README</a>][4]<br />
+&gt;<br />
+&gt;I don&rsquo;t know, but could be that yum fixed &ldquo;Case 2&Prime; and libzypp &ldquo;fails&rdquo;? So the extra time and memory over libzypp taken by yum to make the dep resolution would be justified.</p>
+<p>At first glance I thought the case was very vague, but actually it was really simple and concrete, so it was a good candidate to be tested with our test suite tools. Let's look at it:</p>
+<p>&gt;This is another real case, and is being reproduced in a controlled<br />
+&gt;environment for tests with YUM, APT-RPM, and Smart.<br />
+&gt;<br />
+&gt;The issue is, a package named `A` requires package `BCD` explicitly, and<br />
+&gt;RPM detects implicit dependencies between `A` and `libB`, `libC`, and `libD`.<br />
+&gt;Package `BCD` provides `libB`, `libC`, and `libD`, but additionally there<br />
+&gt;is a package `B` providing `libB`, a package `C` providing `libC`, and<br />
+&gt;a package `D` providing `libD`.<br />
+&gt;<br />
+&gt;In other words, there's a package `A` which requires four different symbols,<br />
+&gt;and one of these symbols is provided by a single package `BCD`, which happens<br />
+&gt;to provide all symbols needed by `A`. There are also packages `B`, `C`, and `D`,<br />
+&gt;that provide some of the symbols required by `A`, but can't satisfy all<br />
+&gt;dependencies without `BCD`.</p>
+<p>So, what is so special about this case?</p>
+<p>&gt;The expected behavior for an operation asking to install `A` is obviously<br />
+&gt;selecting `BCD` to satisfy `A`'s dependencies, on the other hand, `YUM` and<br />
+&gt;APT fail to deliver that as a guaranteed operation, as is shown<br />
+&gt;below.</p>
+<p>Ok, there are a couple of things that must be said about this example.</p>
+<p>* The dependencies of the package A are broken. Unless the package A depends on the libraries libA, libB and libC and some runtime "thing" provided by it, then BCD should be split in three packages. But as none of B, C, D provides any runtime "thing", but they just "replace" it, this is not true. So either fix BCD or fix A to depend on the libraries only, the explicit BCD dependency is bogus.</p>
+<p>* Debian's apt-get won't succeed here, because AFAIK Debian only has dependencies across packages, not on libraries. Actually I still wonder how smart could succeed here using a debian backend. I ignore if apt-rpm does support library dependencies.</p>
+<p>* The result yum produces makes no sense too.</p>
+<p>* So yes, this is the expected result, but the example is a really dumb package.</p>
+<p>How to simulate dependencies using the ZYpp sat solver?. The magic is call deptestomatic. There are two versions of this tool, one provided by satsolver-tools, and another one provided by libzypp-testsuite. The one in sat-solver tools should be sufficient. The one in libzypp-testsuite has extra features like graphical display of dependencies.</p>
+<p>So, we use the helix format for testcases, which was the format of the original RedCarpet testuite. A testcase is a xml file refering to one or more xml files describing repositories, and one repository represents the installed packages (in this case we can simulate with no installed packages and just one repository).</p>
+<p>We start by creating a [packages.xml][6].</p>
+<p>And now, we define the [test.xml][7] describing the testcase.</p>
+<p>If there are conflicts, the xml language has features to select solutions, but that is advanced stuff [documented here][5]. For our case, the test is really, simple, just install A.</p>
+<p>Now run the test:</p>
+<div class="CodeRay">
+<div class="code">
+<pre># deptestomatic test.xml</pre>
+</div>
+</div>
+<p>And you get the result:</p>
+<div class="CodeRay">
+<div class="code">
+<pre>&gt;!&gt; Installing A from channel test
+&gt;!&gt; Solution #1:
+&gt;!&gt; install A-2.0-1.noarch[test]
+&gt;!&gt; install BCD-2.0-1.noarch[test]
+&gt;!&gt; installs=2, upgrades=0, uninstalls=0</pre>
+</div>
+</div>
+<p>Which is the "smart" result. It only installs A and BCD, and not B, C and D (which is what yum does).</p>
+<p>Learning to develop testcases and run them is an excellent way to help the development team to fix bugs without having to request extra information, so you can play yourself with the simulation before actually reporting it.</p>
+<p>You can also generate testcases for day to day operations in a very simple way (no need to write xml):</p>
+<p>* in the YaST (Qt) package selector, go to Extras, and choose generate solver testcase (after selecting your transactions, like installing or removing packages).<br />
+* Use zypper command --debug-solver  (like zypper install --debug-solver foo )</p>
+<p>Then you can run them with deptestomatic by referencing the test xml file. Note that you can reuse package lists (repositories) across tests. libzypp-testsuite and the sat-solver source includes a big list of testcases representing simple operations, distributions, upgrades, and distribution upgrades.</p>
+<p> [1]: <a href="http://labix.org/smart">http://labix.org/smart</a><br />
+ [2]: <a href="http://duncan.mac-vicar.com/blog/archives/309">http://duncan.mac-vicar.com/blog/archives/309</a><br />
+ [3]: <a href="http://duncan.mac-vicar.com/blog/archives/309#comment-96588">http://duncan.mac-vicar.com/blog/archives/309#comment-96588</a><br />
+ [4]: <a href="http://svn.labix.org/smart/trunk/README">http://svn.labix.org/smart/trunk/README</a><br />
+ [5]: <a href="http://en.opensuse.org/Libzypp/Testsuite_solver">http://en.opensuse.org/Libzypp/Testsuite_solver</a><br />
+ [6]: <a href="http://pastebin.com/f4117ec82">http://pastebin.com/f4117ec82</a><br />
+ [7]: <a href="http://pastebin.com/f6add727c">http://pastebin.com/f6add727c</a></p>

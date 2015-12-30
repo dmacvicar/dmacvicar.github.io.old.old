@@ -1,0 +1,43 @@
+---
+layout: post
+title: Introducing osc-plugin-overview
+date: 2009-04-07 22:24:35.000000000 +02:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- newsuse
+- software
+- suse
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48645382'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/introducing-osc-plugin-overview
+  _oembed_072a2688d9d7c511bdbaa81215ce8fd7: "{{unknown}}"
+  _oembed_ed0213fe2e6299421d3d0b9465131b27: "{{unknown}}"
+  _oembed_dfb31c4ace2e1da186e015283c70e287: "{{unknown}}"
+  _oembed_f04edf9ea1f9e0b5c385fcf5a54285cb: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    You maintain some packages in your repository, which you package from some upstream source. You want to quickly compare versions across your development project, Factory, and upstream. You want to configure what is the package list and to display packages only if they are outdated.</p>
+<p>You want to configure a view writing myview.ini to ~/.osc-overview which says something like:</p>
+<p>    [someview]<br />
+    repos=obs://devel:languages:ruby:extensions<br />
+             ,gem://gems.rubyforge.org<br />
+    packages=$1<br />
+    filter.older=$1</p>
+<p>And you want to type "osc overview myview" and get back something like:</p>
+<p>![table][2]</p>
+<p>You can configure as many package data sources as you want for a view. No limit for 2 columns. You can specify from which repo the package list comes from<br />
+using the $x macros. Same with the older version filter.</p>
+<p>Then osc-plugin-overview may be what you are looking for, or even better, it may be soon, when we add more features. See more complete description, where to download it<br />
+and planned features in [its wiki webpage][1].</p>
+<p>This is the first release so it includes support for getting information from build service projects, submit requests against projects, upstream gem servers and that is. I expect to add stuff like customizable output (machine readable, patchnfo, changes, diff) and other sources like local directories and upstream ftp servers. Help welcomed!</p>
+<p>[1]: <a href="http://en.opensuse.org/Build_Service/osc_plugins/Overview">http://en.opensuse.org/Build_Service/osc_plugins/Overview</a><br />
+[2]: <a href="http://www.suse.de/~dmacvicar/screenshots/osc-plugin-overview/osc-plugin-overview-table.png">http://www.suse.de/~dmacvicar/screenshots/osc-plugin-overview/osc-plugin-over...</a></p>

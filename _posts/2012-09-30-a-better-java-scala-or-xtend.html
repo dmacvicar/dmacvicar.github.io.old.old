@@ -1,0 +1,254 @@
+---
+layout: post
+title: 'A better Java: Scala or Xtend?'
+date: 2012-09-30 11:21:52.000000000 +02:00
+type: post
+published: true
+status: publish
+categories:
+- Software
+tags:
+- android
+- eclipse
+- java
+- scala
+- xtend
+meta:
+  _edit_last: '34818'
+  _oembed_85a3f74ad50640211033e8c415660643: "{{unknown}}"
+  _oembed_348beea3770aae7e5553ca2142a814c0: "{{unknown}}"
+  _oembed_b35039b41cf93825602abe7212a35901: "{{unknown}}"
+  _oembed_028312f18d37820deb417cea97bc1452: "{{unknown}}"
+  _oembed_0e8783e6e6670327af775c19a2daa19d: "{{unknown}}"
+  _oembed_2a1ad93051eafabfc8a76f08bd55c9ad: "{{unknown}}"
+  _oembed_95f7901f35abad461d909991b0a98255: <div class="embed-soundcloud"><iframe
+    width="611" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?visual=true&url=http%3A%2F%2Fapi.soundcloud.com%2Fusers%2F146241384&show_artwork=true&maxwidth=611&maxheight=917"></iframe></div>
+  _oembed_time_95f7901f35abad461d909991b0a98255: '1428100641'
+  _oembed_915feb9faeb6cb76b546a6e33f2f827c: "{{unknown}}"
+  _oembed_b0759212eec3aaa851eb5870025b6967: "{{unknown}}"
+  _oembed_bcdd5dd2a632b84a6c2be1190431ed6d: "{{unknown}}"
+  _oembed_333067a9cf7cd93dbe0e6f68afcc5ff0: "{{unknown}}"
+  _oembed_1cd8d50952fd22de530f957f9773ce49: "{{unknown}}"
+  _oembed_55d7f42f57bf5b80856387560609b68f: "{{unknown}}"
+  _oembed_1cc9e7db379c2419f80fbedb5cb5c6b2: "{{unknown}}"
+  _oembed_a7693767f00576157fd948433fef2a6a: "{{unknown}}"
+  _oembed_da2de4afebcd245ffca196b9e8504657: "{{unknown}}"
+  _oembed_a6fd33c68f7eccc643b2cb2296aca0bf: "{{unknown}}"
+  _oembed_9b8683bdc138e9fc214006f24a105373: "{{unknown}}"
+  _oembed_ab32d857b1f37f73713509b212144c99: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+comments: true
+---
+<p>I have been playing with two languages recently: <a href="http://www.scala-lang.org/">Scala</a> and <a href="http://www.eclipse.org/xtend/">Xtend</a>. </p>
+<p>Xtend and Scala have some similarities, but don't let this make you think they are that similar. Both are JVM based languages offering a refresh over Java, but the itch they focus on is different and the culture behind them is even more different.</p>
+<p>Xtend focuses on fixing Java so that it is good enough to do the stuff you are already doing with Java without so much pain. It is like bringing Java to the state where C# is, which is something Sun and Oracle haven't been able to do. Xtend compiles to Java source code, not bytecode. If you use it on eclipse, you will see a xtend-gen folder with the generated code, which is then in turn compiled to bytecode. Everything is transparent to the developer. Xtend is built on top of <a href="http://www.eclipse.org/Xtext/">Xtext, a framework to write Domain Specific Languages</a> and get Java/IDE support for free (example: a <a href="http://www.jnario.org/">Cucumber-like DSL</a>)</p>
+<p>Scala is also a "better Java", but it focuses more on providing a "Scalable Language". A language that can be used on different paradigms or as Domain Specific Languages (eg. the <a href="http://www.playframework.org/">Play! web framework</a> features type-safe HTML templates thanks to Scala). It mixes heavily the object oriented paradigm with functional programming. The functional aspect of Scala aims to provide support to designing concurrent programs easily. This goes beyond simple lambdas and the philosophy aims of immutable objects and expressions over statements, immutable collections and actors in the library.</p>
+<p>For developers just looking for a refresh, both provide:</p>
+<h3>Optional Semicolons</h3>
+<p>Yes. No need to write them in most cases.</p>
+<h3>val and var</h3>
+<p>In Scala:<br />
+[sourcecode language="scala"]<br />
+val someVariable : String = &quot;This will not change&quot;<br />
+var someVariable : String = &quot;This can change later&quot;<br />
+[/sourcecode]</p>
+<p>In Xtend:<br />
+[sourcecode language="scala"]<br />
+val String someVariable = &quot;This will not change&quot;<br />
+var String someVariable = &quot;This can change later&quot;<br />
+[/sourcecode]</p>
+<p>While "val" is not different from "final", I really like this syntax. In scala it is heavily used to make your brain always think if you really need<br />
+to change a variable later. You soon realize that you don't, and most variables are calculations that need to be initialized once.</p>
+<h3>Type inference</h3>
+<p>In the example above, you don't need to specify the types. They will be infered:</p>
+<p>[sourcecode language="scala"]<br />
+val someVariable = &quot;This will not change&quot;<br />
+var someVariable = &quot;This can change later&quot;<br />
+[/sourcecode]</p>
+<p>You want to specify it for some field members that will not be initialized. Or if you assign a concrete class (e.g. HashMap) but wan't the variable to be a Map.</p>
+<p>Scala also has a nice feature, called "lazy val":</p>
+<p>[sourcecode language="scala"]<br />
+lazy val someVariable = new VerySlowToConstructClass()<br />
+[/sourcecode]</p>
+<p>In this case, the variable will be initialized the first time it is accessed.</p>
+<h3>Lambdas</h3>
+<p>In Xtend</p>
+<p>[sourcecode language="scala"]<br />
+val lambda = [String s | s.length]<br />
+[/sourcecode]</p>
+<p>In Scala</p>
+<p>[sourcecode language="scala"]<br />
+val lambda = (s : String) =&gt; { s.length }<br />
+[/sourcecode]</p>
+<p>Both languages have shorter versions for special cases (no parameters, one parameter, etc). I am not going to describe them here.</p>
+<p>Something really cool in Xtend: if you have an interface with one method used as a callback, the compiler will convert a lambda automatically to the interface type.</p>
+<p>[sourcecode language="java"]<br />
+final JTextField textField = new JTextField();<br />
+textField.addActionListener(new ActionListener() {<br />
+  @Override<br />
+  public void actionPerformed(ActionEvent e) {<br />
+    textField.setText(&quot;Something happened!&quot;);<br />
+  }<br />
+});<br />
+[/sourcecode]</p>
+<p>Can be described using a lambda in Xtend like:</p>
+<p>[sourcecode language="scala"]<br />
+val textField = new JTextField<br />
+textField.addActionListener([ ActionEvent e |<br />
+  textField.text = &quot;Something happened!&quot;<br />
+])<br />
+[/sourcecode]</p>
+<p>Or, using the shorter lambda version I did not describe:</p>
+<p>[sourcecode language="scala"]<br />
+val textField = new JTextField<br />
+textField.addActionListener [<br />
+  textField.text = &quot;Something happened!&quot;<br />
+]<br />
+[/sourcecode]</p>
+<p>Lambdas are closures, so they take variables from the current scope. Lambdas are not only useful for callbacks. I do miss ruby's each/map/collect in Java:</p>
+<p>[sourcecode language="scala"]<br />
+movies.ﬁlter[ (1980..1989).contains(year) ].sortBy[ rating ].last.year)<br />
+[/sourcecode]</p>
+<p>Or map/reduce</p>
+<p>[sourcecode language="scala"]<br />
+val charCount = strings.map[s|s.length].reduce[sum, size | sum + size]<br />
+[/sourcecode]</p>
+<h3>Extending libraries</h3>
+<p>Xtend has a really cool feature called extensions.</p>
+<p>[sourcecode language="scala"]<br />
+&quot;hello&quot;.toFirstUpper // calls StringExtensions.toFirstUpper(String)<br />
+listOfStrings.map[ toUpperCase ] // calls ListExtensions.&lt;T, R&gt;map(List&lt;T&gt; list, Function&lt;? super T, ? extends R&gt; mapFunction)<br />
+[/sourcecode]</p>
+<p>Xtend already includes quite a lot of extensions for Java classes like String. Some are convenience methods, but some support features, like the map example above. It is not very useful to support lambdas if your collections do not have forEach or map. I like how this feature is implemented. Simple and elegant. There is more awesomeness in this area. <a href="http://www.eclipse.org/xtend/documentation.html#extensionMethods">You can find about it in the guide</a>.</p>
+<p>Scala on the other hand has something called implicit convertions. They can be used with a pattern called <a href="https://wiki.scala-lang.org/display/SYGN/Pimp-my-library">"pimp-my-library"</a> to extend existing APIs:</p>
+<p>For example, to add a method headOr to the List class, one first create a "wrapper" class with the method:</p>
+<p>[sourcecode language="scala"]<br />
+class ListExtensions[A](xs : List[A]) {<br />
+    def headOr(f : =&gt; A) : A = xs match {<br />
+        case h :: _ =&gt; h<br />
+        case Nil    =&gt; f<br />
+    }<br />
+}<br />
+[/sourcecode]</p>
+<p>Then you add a implicit conversion to this wrapper class:</p>
+<p>[sourcecode language="scala"]<br />
+implicit def listExtensions[A](xs : List[A]) = new ListExtensions(xs)<br />
+[/sourcecode]</p>
+<p>And then this should work:</p>
+<p>[sourcecode language="scala"]<br />
+println(List(1,2,3).headOr(0))     ==&gt; 1<br />
+[/sourcecode]</p>
+<p>Implicit conversions in Scala can be used to use lambdas as event listeners:</p>
+<p>[sourcecode language="scala"]<br />
+implicit def function2ViewOnClickListener(f: View =&gt; Unit) : View.OnClickListener = {<br />
+   new View.OnClickListener() {<br />
+     def onClick(view: View) {<br />
+       f(view)<br />
+     }<br />
+   }<br />
+}<br />
+[/sourcecode]</p>
+<p>Then this works:</p>
+<p>[sourcecode language="scala"]<br />
+loginButton.setOnClickListener((v: View) =&gt; { println(&quot;CLICK!&quot;) } ))<br />
+[/sourcecode]</p>
+<p>This is not automatic as in Xtend. When I was playing with Scala &amp; Android what I did was to create a "trait ScalaActivity extends Activity" with the implicit conversion and then make my activity "class MainActivity extends Activity with ScalaActivity". Traits are cool, give them a look.</p>
+<p>There is more stuff in both languages I am not going to spend time on, but you can go to the respective documentation.</p>
+<p>For Xtend go to <a href="http://www.eclipse.org/xtend/documentation.html">the documentation</a> or this <a href="http://jnario.org/org/jnario/jnario/documentation/20FactsAboutXtendSpec.html">document called "20 Facts about Xtend"</a>.</p>
+<p>For Scala. I bought <a href="http://www.amazon.com/dp/0981531644/ref=cm_sw_r_tw_dp_-xHzqb03X9HX8">"the book"</a>. However you can also find more in <a href="http://docs.scala-lang.org/">the documentation site</a>.</p>
+<h3>IDE support</h3>
+<p>I first tried Scala a year ago (can't remember) and the <a href="http://scala-ide.org/">IDE</a> support was so bad that I did not go further. This is no longer true. There has been quite a lot of investment in it lately and it is good enough already.</p>
+<p>Xtend is part of Eclipse now. Therefore you can expect good IDE support. I found some glitches and weird messages, but in general it works fine.</p>
+<h3>Android</h3>
+<p>I tried both languages on Android.</p>
+<p>Scala worked fine, but you have to use ProGuard to reduce the size of the application by removing unused methods and classes.</p>
+<p><a href="http://blog.andresteingress.com/2011/09/20/programming-android-with-scala/">This guide</a> was a good start. However I hit weird errors with the Treeshaker Proguard plugin I was using. <a href="http://stackoverflow.com/questions/9924015/eclipse-android-scala-made-easy-but-still-does-not-work/11084146#11084146">This Stackoverflow answer</a> put me back on the right track with the right ProGuard plugin.</p>
+<p>I don't feel confortable with Scala on Android. Without an external tool to trim the jar the generated code goes over the limit of methods that can be handled, even when developing. Not only that. The scala runtime library is 8.7M:</p>
+<p>[sourcecode language="text"]<br />
+-rw-r--r--  1 duncan users  8.7M Sep 17 00:01 org.scala-ide.scala.library_2.10.0.v20120820-123254-M7-1ab4994990.jar<br />
+[/sourcecode]</p>
+<p>Xtend was a surprise. Theoretically, as it just generates Java code, it should kind of work out of the box. This was not the case. It was harder than with Scala.</p>
+<p>I spend quite some time trying to use the "R" Android class with Xtend. Basically:</p>
+<p>[sourcecode language="java"]<br />
+setContentView(R.layout.activity_main);<br />
+[/sourcecode]</p>
+<p>And the answer was not intuitive for me.</p>
+<p>[sourcecode language="scala"]<br />
+setContentView(R$layout::activity_main)<br />
+[/sourcecode]</p>
+<p>This is a syntax issue. It is documented. But it was just too unexpected for me.</p>
+<p>There is another issue you should know about. No debugging. The Dalvik VM does not support JSR-45 which is why debugging Xtend (and other Xbase languages) <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=386725">doesn't work</a>.</p>
+<p>Once I accepted not being able to debug. I ran my program:</p>
+<p>[sourcecode language="text"]<br />
+09-29 21:26:02.794: I/dalvikvm(11174): Failed resolving Lduncan/test/MainActivity$5; interface 514 'Lorg/eclipse/xtext/xbase/lib/Functions$Function1;'<br />
+[/sourcecode]</p>
+<p>Ok. The Xtend runtime libraries need to be put into the apk. I went to the build settings "Export and Order" and marked the Xtend library.</p>
+<p>[sourcecode language="text"]<br />
+[2012-09-29 23:40:08 - Myapp] Error generating final archive: Found duplicate file for APK: about.html<br />
+Origin 1: /space/sw/eclipse/plugins/org.eclipse.xtend.lib_2.4.0.v201208210511.jar<br />
+Origin 2: /space/sw/eclipse/plugins/com.google.guava_10.0.1.v201203051515.jar<br />
+[/sourcecode]</p>
+<p>Ok, if I delete these files, everything will work (of course it will break again when I update Xtend with Eclipse:</p>
+<p>[sourcecode language="text"]<br />
+zip -d /space/sw/eclipse/plugins/org.eclipse.xtend.lib_2.4.0.v201208210511.jar about.html<br />
+deleting: about.html<br />
+zip -d /space/sw/eclipse/plugins/org.eclipse.xtext.xbase.lib_2.4.0.v201208210511.jar about.html<br />
+[/sourcecode]</p>
+<p>Run again:</p>
+<p>[sourcecode language="text"]<br />
+[2012-09-29 23:44:07 - MyApp] Error generating final archive: Found duplicate file for APK: plugin.properties<br />
+Origin 1: /space/sw/eclipse/plugins/org.eclipse.xtend.lib_2.4.0.v201208210511.jar<br />
+Origin 2: /space/sw/eclipse/plugins/org.eclipse.xtext.xbase.lib_2.4.0.v201208210511.jar<br />
+[/sourcecode]</p>
+<p>Ok. Now I get it. These are Eclipse plugins. There will be always duplicated files. This is not the solution.</p>
+<p>What I did was to unmark the "Export and Order" check I did to "Xtend Libraries". Copy xtend.lib, xbase.lib and guava jars from the plugins into libs/ of my project. And remove about.html and plugin.properties from these 3 jars. Basically I did a un-OSGi version of the jars.</p>
+<p>Also, a good tip is to change the "xtend-gen" folder in the Xtend settings to use the "gen" folder Android already uses to dump generated files from resources and others.</p>
+<p>After that, everything worked fine and I got my application running on Android. The size of the Xtend and Xbase libraries is 7K and 90K. guava is the heaviest dependency with 1.2M. But nothing compared to Scala. My application was 2M installed without proguard processing (which happens by default in release mode).</p>
+<h3>Criticism</h3>
+<h4>Scala</h4>
+<p>In my opinion, Scala is much more mature. The syntax is well thought. I was annoyed for using [] for generics and () to index arrays until I saw the explanation in the book. I am enjoying reading the book and learning the "Scala way".</p>
+<p>Scala has a unified type system. Unlike Java, everything is an object. You can write:</p>
+<p>[sourcecode language="scala"]<br />
+&quot;some text&quot;.length<br />
+1.abs<br />
+[/sourcecode]</p>
+<p>The problem starts when you realize there is Null, null, Nil, Nothing, None, and Unit (a.k.a void). Also Any, AnyRef and AnyVal. If you want to learn about those you can <a href="http://blog.sanaulla.info/2009/07/12/nothingness/">read this post</a>. Or you look at <a href="http://www.scala-lang.org/api/current/scala/collection/immutable/List.html">scala.collections.immutable.List</a> to look for more information about the type:</p>
+<p>[sourcecode language="scala"]<br />
+sealed abstract class List[+A] extends LinearSeq[A] with Product with GenericTraversableTemplate[A, List] with LinearSeqOptimized[A, List[A]]<br />
+[/sourcecode]</p>
+<p>Oh, and there is a generic called "Either[+A, +B]".</p>
+<p>I know there is a reason for this. I know at some point a page in the Scala book will explain it. But the step curve is not easy. I was writing very basic code and I was asking myself how to do lot of stuff. The biggest problem in my opinion is that Scala, being "Scalable", allows to write the code in various ways. One is the Scala way. The other is not. Sometimes one is the intuitive one. Sometimes the other is to slow.</p>
+<p>An example of this is the <a href="http://www.decodified.com/scala/2010/12/02/the-quickpimp-pattern.html">Quick Pimp Library Pattern</a>. This allows you to write the explicit conversion easier by not having to create a "wrapper" type.</p>
+<p>[sourcecode language="scala"]<br />
+implicit def string2toInt(s: String): { def toInt: Int } = new {<br />
+  def toInt: Int = java.lang.Integer.parseInt(s)<br />
+}<br />
+[/sourcecode]</p>
+<p>But for some reason (<a href="http://www.decodified.com/scala/2010/12/02/the-quickpimp-pattern.html">see the link</a>) this is slow. There was also some speed issue with "for" loops if you write the "for" in the wrong way (I forgot the details).</p>
+<p>This gives me a feeling of the Scala culture very similar to what some subworld of C++ doing heavy template meta-programming, policy based design gives to me. I like boost. But I have to be very awake to decode the signatures and understand how to use a library. The design and the quality is top-notch, but it is an advanced device. You need to invest quite a bunch of time on it and make sure those features will actually pay off. I am not against a language that requires some CS background and a type system that requires you to think a bit. But if you are going to master it, you have to be aware of the cost/benefits.</p>
+<h4>Xtend</h4>
+<p>Xtend was a pleasure to write and read. I got used to it very fast. The documentation is a single page guide. The type system is the same as Java.</p>
+<p>However, Xtend is not fully mature yet (despite version being 2.x). I was playing with the <a href="http://www.jfugue.org/">JFugue library</a> and I tried to do this:</p>
+<p>[sourcecode language="scala"]<br />
+rhythm.addSubstitution('O', &quot;[BASS_DRUM]i&quot;)<br />
+[/sourcecode]</p>
+<p>But I got an error, because the char was interpreted as an string. Then I realized that Xtend <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=386992">does not have character literals yet</a>. The solution:</p>
+<p>[sourcecode language="scala"]<br />
+rhythm.addSubstitution('O'.charAt(0), &quot;[BASS_DRUM]i&quot;)<br />
+[/sourcecode]</p>
+<p>Then when playing with Android, I tried to use one of the greatest features: automatic conversion of lambdas to interfaces with one callback method:</p>
+<p>[sourcecode language="scala"]<br />
+button.onClickListener =  [<br />
+  this.textView.text = &quot;Foo&quot;<br />
+]<br />
+[/sourcecode]</p>
+<p>But it did not compile! The simplest example did not work. Disclaimer: I was not using the released version. But I was not using the nightly builds either. I was using the milestones. I got a "Incompatible types" error. I updated the eclipse plugin to the current milestone, restarted Eclipse, and everything was working. (Facepalm).</p>
+<h3>Conclusions</h3>
+<p>Both are great languages. If you are doing servers and services, I'd pick Scala. But be prepared to invest some time learning the culture behind it.<br />
+Learning Scala gives you the most from the <a href="http://www.playframework.org/">Play! Framework</a>. It can also be used from Java, but it is not the same.</p>
+<p>If you are only looking for a Java refresh. Go with Xtend. You will learn it in one night and will benefit from the value it provides. Once the quirks with Android get resolved (especially the debugger), it is a great addition to Android development. Being an Eclipse project means the IDE will be a first citizen and releases will be stable enough to ship with Eclipse itself.</p>

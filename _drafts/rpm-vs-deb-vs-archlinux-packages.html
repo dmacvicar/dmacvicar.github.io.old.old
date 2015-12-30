@@ -1,0 +1,80 @@
+---
+layout: post
+title: rpm vs deb vs archlinux packages
+date: 
+type: post
+published: false
+status: draft
+categories: []
+tags: []
+meta:
+  _edit_last: '34818'
+  geo_public: '0'
+  _oembed_2b5828831d61ca8b6e2f87c6034feb41: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>There are multiple package formats in the Linux world. They have lot of similarities: a payload plus some dependency metadata, a remote repository format, some command-line tool to automate the installation of a dependency chain, etc.</p>
+<p>The implementation as part of the distribution build process is different. I want to show how rpm is implemented differently in at least the most popular rpm distributions: Fedora and openSUSE. I want also to show how this difference provides more robust dependencies. For that I will compare Fedora/openSUSE rpm packages with their Debian/Archlinux counterparts. It is worth to mention that this difference is not inherent to the package format, and describes better the design of the distribution more than the package format.</p>
+<p>Packages are built from a "recipe" that tells the build-system how to build the package. Lets take Audacity and compare it across distributions.</p>
+<p>On Archlinux</p>
+<p>[code language="bash"]<br />
+pkgname=harbour<br />
+pkgver=3.0.0<br />
+pkgrel=2<br />
+license=('GPL3')<br />
+arch=('any')<br />
+depends=('qt4' 'zlib' 'libjpeg-turbo' 'pcre' 'libpng12' 'lib32-sqlite3' 'openssl' 'ncurses' 'gpm' 'libx11' 'slang')<br />
+pkgdesc=&quot;Compiler for the xBase superset language often referred to as Clipper Harbour is a free software compiler for the xBase superset language&quot;<br />
+url=&quot;http://harbour-project.sourceforge.net/&quot;<br />
+makedepends=('gcc' 'pkgconfig' )<br />
+conflicts=('')<br />
+options=(!emptydirs)<br />
+source=(http://dfn.dl.sourceforge.net/project/harbour-project/source/$pkgver/$pkgname-$pkgver.tar.bz2)<br />
+[/code]</p>
+<p>You can see that dependencies are separated in two batches: dependes and makedepends. In reality the runtime dependencies are $depends and build dependencies not $makedepends but $depends + $makedepends, so $makedepends reflects only the "extra" packages that you need to build but that you don't need at runtime. As you can see, the runtime dependencies point to other packages in the distribution.</p>
+<p>If you look at the built package, audacity-x.x.x-x86_64.pkg.xz, it is basically a tarball with the extra metadata:</p>
+<p>[code]<br />
+usr<br />
+.INSTALL<br />
+.MTREE<br />
+.PKGINFO<br />
+[/code]</p>
+<p>The information about runtime dependencies is moved almost 1:1 to the .PKGINFO file.</p>
+<p>[code]<br />
+Source: audacity<br />
+Section: sound<br />
+...<br />
+Build-Depends: autoconf,<br />
+               automake,<br />
+               debhelper (&gt;= 7.0.50~),<br />
+               gettext,<br />
+               libasound2-dev [linux-any],<br />
+               libavcodec-dev (&gt;= 4:0.6),<br />
+               libavformat-dev (&gt;= 4:0.6),<br />
+               libavutil-dev (&gt;= 4:0.6),<br />
+ ...<br />
+[/code]</p>
+<p>in the resulting .deb file, which is a tarball like</p>
+<p>[code]<br />
+usr/<br />
+DEBIAN/<br />
+[/code]</p>
+<p>Looking at the control file inside the DEBIAN directory:</p>
+<p>[code]<br />
+Package: audacity<br />
+Version: 2.0.1-1<br />
+Architecture: amd64<br />
+Maintainer: Debian Multimedia Maintainers &lt;pkg-multimedia-maintainers@lists.alioth.debian.org&gt;<br />
+Installed-Size: 6743<br />
+Depends: audacity-data (= 2.0.1-1), libasound2 (&gt;= 1.0.16), libavcodec53 (&gt;= 6:0.8.3-4) | libavcodec-extra-53 (&gt;= 6:0.8.3-4), libavformat53 (&gt;= 6:0.8.3-4), libavutil51 (&gt;= 6:0.8.3-4), libc6 (&gt;= 2.11), libexpat1 (&gt;= 2.0.1), libflac++6 (&gt;= 1.2.1), libflac8 (&gt;= 1.2.1), libgcc1 (&gt;= 1:4.1.1), libglib2.0-0 (&gt;= 2.12.0), libgtk2.0-0 (&gt;= 2.8.0), libid3tag0 (&gt;= 0.15.1b), libmad0 (&gt;= 0.15.1b-3), libmp3lame0, libogg0 (&gt;= 1.0rc3), libportaudio2 (&gt;= 19+svn20101113-2~), libportsmf0, libsamplerate0 (&gt;= 0.1.7), libsbsms10, libsndfile1 (&gt;= 1.0.20), libsoundtouch0, libstdc++6 (&gt;= 4.4.0), libtwolame0, libvamp-hostsdk3, libvorbis0a (&gt;= 1.1.2), libvorbisenc2 (&gt;= 1.1.2), libvorbisfile3 (&gt;= 1.1.2), libwxbase2.8-0 (&gt;= 2.8.12.1), libwxgtk2.8-0 (&gt;= 2.8.12.1)<br />
+[/code]</p>
+<p>dh_shlibdeps</p>
+<p>https://wiki.archlinux.org/index.php/namcap<br />
+dependency-detected-not-included (error) The file referred to has a dependency which is not listed in the depends array. Ignore this error if the named dependency is listed in the optdepends array.<br />
+dependency-already-satisfied (warning) The dependency is already satisfied (as the dependency of some package already listed as a dependency for example) and thus is redundant. You can use the pactree tool from pacman to view the dependency tree of your package.<br />
+dependency-not-needed </p>

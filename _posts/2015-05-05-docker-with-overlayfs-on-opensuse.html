@@ -1,0 +1,37 @@
+---
+layout: post
+title: Docker with overlayfs on openSUSE
+date: 2015-05-05 22:43:06.000000000 +02:00
+type: post
+published: true
+status: publish
+categories:
+- Software
+tags:
+- docker
+meta:
+  _edit_last: '34818'
+  geo_public: '0'
+  _publicize_job_id: '17882322592'
+  _wpcom_is_markdown: '1'
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>Docker works better with an union filesystem, but the most popular one (aufs) is not included in the mainline kernel because of stability issues.</p>
+<p>openSUSE has been shipping the Device Mapper driver until now, but the most promising driver seems to be the one based on the overlayfs union filesystem from <a href="https://git.kernel.org/cgit/linux/kernel/git/mszeredi/vfs.git/log/?h=overlayfs-next">SUSE developer Miklos Szeredi</a>. Overlayfs made it upstream, and the kernel 4.0 has all the pieces that docker needs to make it work as a storage backend.</p>
+<p>kernel 4.0.0 arrived in the last days to openSUSE Tumbleweed. So provided you already ran "zypper dup" you can switch to this backend with:</p>
+<p>Delete all images and containers:</p>
+<p><code>docker rm $(docker ps -a -q)<br />
+docker rmi $(docker images -q)</code></p>
+<p>Edit <code>/etc/sysconfig/docker</code> and add a -s option:</p>
+<p>[code lang=text]<br />
+DOCKER_OPTS=&quot;-s overlay&quot;<br />
+[/code]</p>
+<p>Restart docker:</p>
+<p>[code lang=text]<br />
+systemctl restart docker<br />
+[/code]</p>

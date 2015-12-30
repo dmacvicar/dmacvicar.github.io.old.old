@@ -1,0 +1,73 @@
+---
+layout: post
+title: ZYpp, bindings and applets.
+date: 2007-08-01 14:13:27.000000000 +02:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- newkde
+- newsuse
+- suse
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48644325'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/zypp-bindings-and-applets
+  _oembed_5324b2a591c46450d38debce0791a452: "{{unknown}}"
+  _oembed_5e742aa180a5337b20e4ce15d7c2ee65: "{{unknown}}"
+  _oembed_f9b5cf65ffb7fba4775f3e6463c1caf8: "{{unknown}}"
+  _oembed_808eea3bdc21c03f0d8036f64fcb7a6b: "{{unknown}}"
+  _oembed_3052e4a1dc2a7a49ac8bd58fd7ed765d: "{{unknown}}"
+  _oembed_7ad503a798e86f6102972bd55275fe2f: "{{unknown}}"
+  _oembed_e0e131371836970c63af82496e4e9265: "{{unknown}}"
+  _oembed_ab5bf77884e90ef12e927e17504a12b5: "{{unknown}}"
+  _oembed_a36599b376a02a4a9131d3da5b14f433: "{{unknown}}"
+  _oembed_6d0ff34c117927c355a951962599ad09: "{{unknown}}"
+  _oembed_98478f59cd86d1d80274358139121f02: "{{unknown}}"
+  _oembed_d25b4f6b6159b314010c7428ee93bb5b: "{{unknown}}"
+  _oembed_7a9e5ed5b335e77d4239a034c19d4e41: "{{unknown}}"
+  _oembed_95322d8bdc2cc6b273519d248b596498: "{{unknown}}"
+  _oembed_2c27a18198c92286f1990e53a4d32373: "{{unknown}}"
+  _oembed_9fde60f7ad3d66a9bfe162f5650da60e: "{{unknown}}"
+  _oembed_79e8dc474baab3fb9fee88f654230bf2: "{{unknown}}"
+  _oembed_7c3280d47a7ef81100b0c9b60baac793: "{{unknown}}"
+  _oembed_2db5568314c32fe80eb0ccceeba49311: "{{unknown}}"
+  _oembed_95d6496debc5baf1d0960b6dad35d0e2: "{{unknown}}"
+  _oembed_f2fe80c9858a6a3494edbcc29da7b788: "{{unknown}}"
+  _oembed_d735cde4c0fb9a8845f0ccce41ad1599: "{{unknown}}"
+  _oembed_a76f43245138b8d7e2d7efe89333811d: "{{unknown}}"
+  _oembed_78578f74f48b2e1beae618d007c04638: "{{unknown}}"
+  _oembed_eb3951191ec31153acbd9c12af4770c4: "{{unknown}}"
+  _oembed_08ba1a084f9d73ee075f0d2858b6e141: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    ZYpp</p>
+<p>We are close to release the last alpha of 10.3. This will be the second one containing a much improved package management stack.</p>
+<p>In the last weeks we have been squashing bugs. Most of them show up when we integrated all the pieces together (like YaST and the installation ).</p>
+<p>A couple of small features are now showing up. The ability to use variables in repository urls is now in. Only $arch and $basearch are implemented in svn right now. This will allow for easier repository maintenance. We will try to implement all relevant variables for SUSE Linux specific features, but our strategy is to provide maximum compatibility with other tools like YaST and smart, so expect their relevant variables to be there too.</p>
+<p>Bindings</p>
+<p>Lot of time ago, I created a prototype of ruby bindings for libzypp. Klaus improved them a lot. After the refactoring, it was all the time more difficult to catch up with the changes using hand written binding code.</p>
+<p>Time later I tried a new approach and tried with [SWIG][2]. What seemed impossible at the beginning later turned more real, when I quickly was able to run the old bindings [simple examples][4]. Most of the trick was about feeding "clean" interfaces to SWIG, which usually got confused with all the black magic and bleeding edge C++ techniques used in the library.</p>
+<p>The last weeks, [Arvin][5] has been giving them lot of love. My first woooho! was when he created the [python subdirectory][3] in examples/. Not that I like python. But having ZYpp running in the most popular languages will be a nice added value. Other languages will come as we find people mastering the SWIG typemaps for those.</p>
+<p>Applets</p>
+<p>Other application that has got tons of love for 10.3 is the [openSUSE updater applet collection][12]. Well, the collection is just 2. If you remember, this applet has its origin in a [Google SOC Project][7] by Narayan Newton, which I hacked later to provide a backend using libzypp. Later [Jano][9] introduced the [Gnome version][10].</p>
+<p>Now we have versions for both desktops. Before jumping into the libzypp refactoring I tweaked the [KDE version][11] to use [kparts][8], KDE's component technology, for the backends. [Thomas][6] has been working on it since then, fixing most bugs and giving it a fresh and polished look. On the other desktop, Joerg has been enhancing the Gnome version as well. Both are improving the experience of installing updates, with some advice from [the UX team][13].</p>
+<p> [1]: <a href="http://duncan.mac-vicar.com/blog/archives/254">http://duncan.mac-vicar.com/blog/archives/254</a><br />
+ [2]: <a href="http://www.swig.org/">http://www.swig.org/</a><br />
+ [3]: <a href="http://svn.opensuse.org/svn/zypp/trunk/libzypp-bindings/examples/python/">http://svn.opensuse.org/svn/zypp/trunk/libzypp-bindings/examples/python/</a><br />
+ [4]: <a href="http://svn.opensuse.org/svn/zypp/trunk/libzypp-bindings/examples/ruby">http://svn.opensuse.org/svn/zypp/trunk/libzypp-bindings/examples/ruby</a><br />
+ [5]: <a href="http://arvin.schnell-web.net/">http://arvin.schnell-web.net/</a><br />
+ [6]: <a href="http://en.opensuse.org/User:Tgoettlicher">http://en.opensuse.org/User:Tgoettlicher</a><br />
+ [7]: <a href="http://theopenstandard.com/blogs/raven/index.php">http://theopenstandard.com/blogs/raven/index.php</a>?/archives/15-A-Change-In-The-Wind.html<br />
+ [8]: <a href="http://techbase.kde.org/Development/Architecture/KDE3/KParts">http://techbase.kde.org/Development/Architecture/KDE3/KParts</a><br />
+ [9]: <a href="http://en.opensuse.org/User:Jkupec">http://en.opensuse.org/User:Jkupec</a><br />
+ [10]: <a href="http://en.opensuse.org/GNOME_Updater_Applet">http://en.opensuse.org/GNOME_Updater_Applet</a><br />
+ [11]: <a href="http://en.opensuse.org/KDE_Updater_Applet">http://en.opensuse.org/KDE_Updater_Applet</a><br />
+ [12]: <a href="http://en.opensuse.org/Updater_Applet">http://en.opensuse.org/Updater_Applet</a><br />
+ [13]: <a href="http://en.opensuse.org/UX">http://en.opensuse.org/UX</a></p>

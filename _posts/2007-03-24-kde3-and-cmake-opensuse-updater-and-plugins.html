@@ -1,0 +1,30 @@
+---
+layout: post
+title: KDE3 and cmake, opensuse-updater and plugins
+date: 2007-03-24 00:06:02.000000000 +01:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- newkde
+- newsuse
+- suse
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48643977'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/kde3-and-cmake-opensuse-updater-and-plugins
+  _oembed_9db5ac019e847a92f5f140dd61a2cf5d: "{{unknown}}"
+  _oembed_ec30166325de10b9e33574b9278ccf5d: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    Yesterday I was able to compile opensuse-updater with cmake. The solution was to look in [KPilot][1] build system. I did not realize kde3_automoc figures QObject classes looking for a .moc include in  the implementation file instead of looking for Q_OBJECT in the header. I can understand this, because sometimes you define some quick QObject classes when doing test programs in one implementation file. Still, took me a while to figure why it was not working.</p>
+<p>Moving the current updater backends to KDE generic components was easy. It still lacks a way to select a default component.</p>
+<p>Performancing, the Firefox blogging add-on I use, was renamed to [ScribeFire][2].</p>
+<p> [1]: <a href="http://www.kpilot.org">http://www.kpilot.org</a><br />
+ [2]: <a href="http://scribefire.com/">http://scribefire.com/</a></p>

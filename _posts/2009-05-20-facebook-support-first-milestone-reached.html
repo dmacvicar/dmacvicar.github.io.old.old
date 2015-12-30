@@ -1,0 +1,50 @@
+---
+layout: post
+title: 'Facebook support: First milestone reached'
+date: 2009-05-20 14:19:35.000000000 +02:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- facebook
+- newkde
+- newsuse
+- software
+- suse
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48645417'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/facebook-support-first-milestone-reached
+  _oembed_6a25acf2958fa226ddbf39af06dd3a02: "{{unknown}}"
+  _oembed_8adaba5b1d1b69e3cf29e8a265a6d79e: "{{unknown}}"
+  _oembed_625f4b6884c4f8b85e710c987ecffbe8: "{{unknown}}"
+  _oembed_b9993901147015954a3103a50a491ee0: "{{unknown}}"
+  _oembed_f70f6b198f023629d0217b1f7e7c4f14: "{{unknown}}"
+  _oembed_474ddf6bc8337c4ce534ee8aa69f1325: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    So, I have been working some weeks on this, and today I reached the first "usable" point. Screenshot:</p>
+<p>![facebook screenshot](<a href="http://userbase.kde.org/images.userbase/9/95/Kopete-fb-4-c.png)">http://userbase.kde.org/images.userbase/9/95/Kopete-fb-4-c.png)</a></p>
+<p>As you may know, Facebook has a chat service. For me at least is slowly becoming the place where I have more people talking to me, and as you may also guess, the value of social systems is very tied to the number of users.</p>
+<p>Sadly, Facebook guys where not smart enough as the Google guys and brought yet another damn protocol to this protocol overpopulated world. Then came the worst part. They announced something that was not there and [promised Jabber support][1]. One year later nothing has yet happened.</p>
+<p>For a such popular service, one starts to think whether waiting another year is worth for a protocol that is so popular. As I wanted it myself now, at some point I decided I was willing to implement it even if a Jabber version was available later.</p>
+<p>We already have the problem that users expect to see Google talk in the Kopete list, because developers don't figure out that grandma does not know what Jabber/XMPP is. So a good improvement would be adding the concept of "services" where we could add a protocol by just saying "it is just jabber, but with this server settings, this logo and this name". That path would allow for a easy move to other XMPP protocols later.</p>
+<p>But for Facebook, no more wait. Yesterday I was able to use it for first time to chat, so I am blogging about it.</p>
+<p>Next steps:</p>
+<p>* Add more error handling<br />
+* Fix a bug in the contacts status when they go offline<br />
+* Put it into kopete or playground svn<br />
+* Make an openSUSE package ;-)<br />
+* Cleanup. I started over the testbed plugin and it added some stuff that probably I don't need<br />
+* Proxy support. I coded the engine using [QNetworkAccessManager][2] so it is KDE independent. Only the Kopete plugin is KDE based, so I haven't looked into proxy support and other stuff</p>
+<p>Other stuff with less priority:</p>
+<p>* Adding contacts from the client<br />
+* Configuration (there is no much to configure)</p>
+<p>[1]: <a href="http://www.google.com/search?q=facebook+jabber">http://www.google.com/search?q=facebook+jabber</a><br />
+[2]: <a href="http://doc.trolltech.com/qnetworkaccessmanager.html">http://doc.trolltech.com/qnetworkaccessmanager.html</a></p>

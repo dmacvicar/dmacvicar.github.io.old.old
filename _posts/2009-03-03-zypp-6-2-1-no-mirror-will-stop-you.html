@@ -1,0 +1,54 @@
+---
+layout: post
+title: ZYpp 6.2.1, no mirror will stop you
+date: 2009-03-03 23:23:05.000000000 +01:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- newsuse
+- software
+- suse
+- yast
+- zypp
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48645361'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/zypp-621-no-mirror-will-stop-you
+  _oembed_bed2b341cdae1ac597e56ef5b8dd3d8f: "{{unknown}}"
+  _oembed_abdb738f7eda1133b6892df595c96e3d: "{{unknown}}"
+  _oembed_0b78ce8da116d2ecd01e650f018f6833: "{{unknown}}"
+  _oembed_93b65968e2e0279ad1b0ebb34b756b43: "{{unknown}}"
+  _oembed_45067b011872eca2e81936e9397fa02b: "{{unknown}}"
+  _oembed_503c752a5f635e69795496b7890d7bbc: "{{unknown}}"
+  _oembed_11db472375feccf230b99eb0e3caf295: "{{unknown}}"
+  _oembed_ed414ecd988694eb8874e84896049451: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    Two weeks ago [I posted about making aria2c][1] the default transfer mechanism for our software management stack.</p>
+<p>With libzypp 6.1.0 in Factory, this is already the case. With the first community round of testing, we got quite a lot of bug reports and feedback. Some stuff did not work because the implementation was wrong, while others just showed us that aria2 worked differently as we thought.</p>
+<p>The upcoming 6.2.1 addresses the following issues:</p>
+<p>* implemented speed indicators (bnc#475506). You should see transfer speed in applications that report it (like zypper).<br />
+* implemented progress indicators correctly (bnc#473846). You should see progress reporting now in a consistent basis.</p>
+<p>* fixed broken pipe when looking for aria2c which caused a fallback to curl. (bnc#480930)</p>
+<p>* implement saving and reading mirror stats data in /var/cache/zypp/aria2.stats. This means libzypp now learns which mirrors are faster and more reliable for you and remembers it. Every usage adds more information to the "learning".</p>
+<p>* handle failover correctly (bnc#481115). This means libzypp tries harder to get the file from alternate mirrors.<br />
+* various improvements in error and report handling. General code review and minor fixes.</p>
+<p>How to test?</p>
+<p>Peter added an interesting "test feature". If a request happens with a header X-Broken-Mirrors then the openSUSE redirector will send you broken mirrors. So edit your root's aria2.conf:</p>
+<p>    cat ~/.aria2/aria2.conf<br />
+    header=X-Broken-Mirrors: true</p>
+<p>And observe zypper.log. Even if errors are reported, libzypp should try other mirrors and get the file successfully.</p>
+<p>You can go more extreme, and use "X-Broken-Mirrors: only", which will give you only bad servers. Even in this case you will see libzypp try hard to get the file before giving up. How hard to try is configurable, see [last post for more information][1].</p>
+<p>Big thanks to [Peter Poeml][4] and Tatsuhiro Tsujikawa for all the feedback and support, and of course</p>
+<p>And with this, [feature 302923][2] is done ;-) and the rest is tracked as bugs.</p>
+<p>[1]: <a href="http://duncan.mac-vicar.com/blog/archives/507">http://duncan.mac-vicar.com/blog/archives/507</a><br />
+[2]: <a href="https://features.opensuse.org/302923">https://features.opensuse.org/302923</a><br />
+[3]: <a href="http://en.opensuse.org/Libzypp/Failover">http://en.opensuse.org/Libzypp/Failover</a><br />
+[4]: <a href="http://en.opensuse.org/User:Poeml">http://en.opensuse.org/User:Poeml</a></p>

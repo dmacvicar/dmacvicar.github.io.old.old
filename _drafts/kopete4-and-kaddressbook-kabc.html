@@ -1,0 +1,73 @@
+---
+layout: post
+title: Kopete4 and KAddressbook (KABC)
+date: 
+type: post
+published: false
+status: trash
+categories: []
+tags: []
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48587994'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/kopete4-and-kaddressbook-kabc
+  _wp_trash_meta_status: publish
+  _wp_trash_meta_time: '1450349299'
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+
+<p>I have setup my kde4 environment for first time since I moved. After it was done, I noticed my backtraces had "optimized out" values instead of memory addresses, so I had to recompile everything with -O0.</p>
+<p>Right now, libkopete and Kopete itself compiles with kdelibs4_snapshot <a href="http://img295.imageshack.us/img295/5232/kopete415to.png">[ Screenshot ]</a>. No protocols compile yet (except testbed). The initial porting work was started by Grej and IIRC Matt and Olivier have been doing more on it. So I started porting the base classes like Account, Protocol and ContactList to stop using the Qt3 support list classes. I have MSN half compiling too.</p>
+<p>I wanted to play with testbed to try the concepts I discussed with Will in our meeting at my place last weekend. Sadly, KABC compiles but did not work at all.</p>
+<p>Loading my big addressbook crashes on the detach() function of when trying to set some value. I did not dig into the KShared stuff yet.</p>
+<div>
+<div class="CodeRay">
+<div class="code">
+<pre>Using host libthread_db library &quot;/lib64/tls/libthread_db.so.1&quot;.
+[Thread debugging using libthread_db enabled]
+[New Thread 46912595992576 (LWP 27699)]
+[KCrash handler]
+#3  0x00002aaaafaad8e5 in QString::size (this=0x81d1d8) at qstring.h:83
+#4  0x00002aaaafad1531 in QString::operator== (this=0x7fffffabb370, 
+    other=@0x81d1d8)
+    at /home/duncan/sources/kde4/qt-copy/src/corelib/tools/qstring.cpp:1598
+#5  0x00002aaaab06243c in KABC::Addressee::setFormattedName (
+    this=0x7fffffabb1e0, formattedName=@0x7fffffabb370) at addressee.cpp:334
+#6  0x00002aaaab09392a in KABC::VCardTool::parseVCards (this=0x7fffffabb730, 
+    vcard=@0x7fffffabb7e0)
+    at /home/duncan/sources/kde4/kdelibs4_snapshot/kabc/vcardtool.cpp:427
+#7  0x00002aaaab07dbef in KABC::VCardConverter::parseVCards (
+    this=0x7fffffabb7c0, vcard=@0x7fffffabb7e0)
+    at /home/duncan/sources/kde4/kdelibs4_snapshot/kabc/vcardconverter.cpp:61
+#8  0x00002aaaab07e750 in KABC::VCardFormat::loadAll (this=0x81ae10, 
+    resource=0x81afc0, file=0x7fffffabb850)
+    at /home/duncan/sources/kde4/kdelibs4_snapshot/kabc/vcardformat.cpp:69
+#9  0x00002aaab1392748 in KABC::ResourceFile::load (this=0x81afc0)
+    at /home/duncan/sources/kde4/kdelibs4_snapshot/kabc/plugins/file/resourcefile.cpp:218
+#10 0x00002aaaab05b262 in KABC::AddressBook::load (this=0x776ab0)
+    at /home/duncan/sources/kde4/kdelibs4_snapshot/kabc/addressbook.cpp:345</pre>
+</div>
+</div>
+</div>
+<p>Trying to insert a new contact, had problems too.</p>
+<div>
+<div class="CodeRay">
+<div class="code">
+<pre>[New Thread 46912595992576 (LWP 27573)]
+[KCrash handler]
+#3  0x00002aaaab05832f in KABC::AddressBook::insertAddressee (this=0x6fac70, 
+    a=@0x7fffffe4fa00)
+    at /home/duncan/sources/kde4/kdelibs4_snapshot/kabc/addressbook.cpp:525
+#4  0x00002aaaaaece966 in Kopete::UI::AddressBookSelectorWidget::slotAddAddresseeClicked (this=0x860170)
+    at /home/duncan/sources/kde4/kdenetwork/kopete/libkopete/ui/addressbookselectorwidget.cpp:153</pre>
+</div>
+</div>
+</div>
+<p>I must figure whats going on here. Testbed will be very useful to play with the new integration concepts that have been floating in Will's head since some time. After he explained me some stuff I got some ideas how we can do it in small iterations. I would like to do it in the kde4 codebase, because our 0.12dev branch could not be broken at that level IMHO.</p>
+<p>The Haiku guys (Haiku is an attempt to recreate BeOS) posted an entry about Desktop/IM integration in their blog. <a href="http://blog.petterhj.net/entry.php?id=27">Take a look</a></p>
+<p>.</p>
+<div>tag:kde</div>

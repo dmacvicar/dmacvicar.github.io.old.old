@@ -1,0 +1,53 @@
+---
+layout: post
+title: Ruby dynamic methods
+date: 
+type: post
+published: false
+status: trash
+categories: []
+tags: []
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48588036'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/ruby-dynamic-methods
+  _wp_trash_meta_status: publish
+  _wp_trash_meta_time: '1450349369'
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+
+<p>The <a href="http://www.ruby-lang">Ruby language</a>, has a feature call method missing, which allows your class to react to unknown method calls without raising a unknown-method error.</p>
+<p>This allows a class to answer to whatever method is called. Which is very useful if you are writing a Ruby binding to a component you query also dynamically, because with this way method_missing act as a gateway only, forwarding the message (method name) and the parameters, after doing the appropiate conversion.</p>
+<p>Yes, That is what I am doing right now :-)</p>
+<p>A good example of this feature, is the example found in the Ruby Reference Book, which is a class that answers to roman numbers methods, using help from the built in conversion functions.</p>
+<div>
+<div class="CodeRay">
+<div class="code">
+<pre>class Roman
+  def romanToInt(str)
+    # ...
+  end
+  def method_missing(methId)
+    str = methId.id2name
+    romanToInt(str)
+  end
+end</pre>
+</div>
+</div>
+</div>
+<p>The result is:</p>
+<div>
+<div class="CodeRay">
+<div class="code">
+<pre>r = Roman.new
+r.iv  -&gt;  4
+r.xxiii  -&gt;  23
+r.mm  -&gt;  2000</pre>
+</div>
+</div>
+</div>
+<div>tag:ruby</div>

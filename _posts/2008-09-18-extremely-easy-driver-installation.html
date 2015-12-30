@@ -1,0 +1,78 @@
+---
+layout: post
+title: Extremely easy driver installation
+date: 2008-09-18 16:48:47.000000000 +02:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- newkde
+- newsuse
+- packagekit
+- software
+- suse
+- zypp
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48644880'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/extremely-easy-driver-installation
+  _oembed_7d5e291321e70373ba1a9891b9b2cec8: "{{unknown}}"
+  _oembed_e6b7e52b1e336bcf0f86a15b7a0c8438: "{{unknown}}"
+  _oembed_8176d4ebfdf1ac53f87ff077e00dd813: "{{unknown}}"
+  _oembed_6505101ba6f4e8e87ea4107e6f0cd78f: "{{unknown}}"
+  _oembed_d7c56f05f1714179dfde776c07beb299: "{{unknown}}"
+  _oembed_5a743a78341bb1b1a027df9ba85582ac: "{{unknown}}"
+  _oembed_2731b332bf26c4bacb99f139ba698e60: "{{unknown}}"
+  _oembed_2db5568314c32fe80eb0ccceeba49311: "{{unknown}}"
+  _oembed_bca5ee7a47132683647a81929c25bfcc: "{{unknown}}"
+  _oembed_16de9a8a314aa50f37f29f465f22c739: "{{unknown}}"
+  _oembed_d979adac31019e002225305fbf4ffd3a: "{{unknown}}"
+  _oembed_5696baf2f37ed9e9a4fa4eb0c06f0449: "{{unknown}}"
+  _oembed_25a4c7506aca98c859ac25eb11a53629: "{{unknown}}"
+  _oembed_be96edca05bd81e145f5b7b5e6ec93f7: "{{unknown}}"
+  _oembed_40020ea485b507a65e02c1ac140a7a3c: "{{unknown}}"
+  _oembed_5fc44a9edbdf89abe34d2492c5a513f0: "{{unknown}}"
+  _oembed_65bcd17f88afc0fd50bbe3c6976b9c23: "{{unknown}}"
+  _oembed_27f8085e961532947362bc56e5bedd5f: "{{unknown}}"
+  _oembed_7ad503a798e86f6102972bd55275fe2f: "{{unknown}}"
+  _oembed_14d4e50837344f55cd8099447b29b4c7: "{{unknown}}"
+  _oembed_1cb96f9678a527b236806df0d8503edc: "{{unknown}}"
+  _oembed_f6e493d63613f8c4a762ab519da7d137: "{{unknown}}"
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    We have something really cool in.</p>
+<p>## How it works, usecase and experience.</p>
+<p>The usecase. I have a webcam, but it does not work, because it requires the quickcam-kmp-default package. But I don't know that.</p>
+<p>![The webcam](<a href="http://www.suse.de/~dmacvicar/driverinstall/webcamphoto1-s.jpg)">http://www.suse.de/~dmacvicar/driverinstall/webcamphoto1-s.jpg)</a></p>
+<p>![Desktop](<a href="http://www.suse.de/~dmacvicar/driverinstall/driver-install1-s.png)">http://www.suse.de/~dmacvicar/driverinstall/driver-install1-s.png)</a></p>
+<p>You are in your desktop. You can see in the tray the applet telling you that there are security updates to install.</p>
+<p>![Tray Icon](<a href="http://www.suse.de/~dmacvicar/driverinstall/driver-install-tray-icon-updates.png)">http://www.suse.de/~dmacvicar/driverinstall/driver-install-tray-icon-updates....</a></p>
+<p>Now I connect the webcam to the computer:</p>
+<p>![Webcam connected](<a href="http://www.suse.de/~dmacvicar/driverinstall/webcamphoto2-s.jpg)">http://www.suse.de/~dmacvicar/driverinstall/webcamphoto2-s.jpg)</a></p>
+<p>Notice the tray icon. It went from "There are security updates available" to a "hardware" icon (we will add a more visible notification too).</p>
+<p>![Tray Icon](<a href="http://www.suse.de/~dmacvicar/driverinstall/driver-install-tray-icon.png)">http://www.suse.de/~dmacvicar/driverinstall/driver-install-tray-icon.png)</a></p>
+<p>Now you click on the icon and you see:</p>
+<p>![Install Dialog](<a href="http://www.suse.de/~dmacvicar/driverinstall/driver-install4.png)">http://www.suse.de/~dmacvicar/driverinstall/driver-install4.png)</a></p>
+<p>You click install, and after 10 seconds quickcam-kmp-default is installed.</p>
+<p>### See it live</p>
+<p>Do you want to see it live?. I did a recording of the process as a [flash movie][3].</p>
+<p>## Background</p>
+<p>Since openSUSE 10.1, [ZYpp][5] has the ability to recommend packages based on drivers and other useful system information. Packages can supplement any namespace, which is in turn evaluated at solving time. This allows to automatic select drivers on installation, based on the machine hardware, for example.</p>
+<p>You could also plug new hardware, and call</p>
+<p>    # zypper up</p>
+<p>And that would recommend you to install the right drivers.</p>
+<p>However this functionality was not used to its own potential. What we really wanted here was to recommend packages when hardware was plugged.</p>
+<p>With [PackageKit][4], filling that gap was possible, as we can easily talk to [ZYpp][5] from the desktop over dbus, using an abstracted interface.</p>
+<p>So in the last weeks, [Stefan Haas][1] implemented support for this in our PackageKit ZYpp backend. [Thomas Goettlicher][2] added the needed glue in the kupdater applet. That is, listening to added devices events, and calling PackageKit to let ZYpp recommend new hardware.</p>
+<p>Yesterday I sat to see it working. Some small one liners prevented it to work, but after some tweaking in the PackageKit backend, it worked really well. Thanks for everyone putting the pieces together.</p>
+<p> [1]: <a href="http://en.opensuse.org/User:Haass">http://en.opensuse.org/User:Haass</a><br />
+ [2]: <a href="http://en.opensuse.org/User:Tgoettlicher">http://en.opensuse.org/User:Tgoettlicher</a><br />
+ [3]: <a href="http://www.suse.de/~dmacvicar/driverinstall/drivers.swf">http://www.suse.de/~dmacvicar/driverinstall/drivers.swf</a><br />
+ [4]: <a href="http://www.packagekit.org">http://www.packagekit.org</a><br />
+ [5]: <a href="http://en.opensuse.org/ZYPP">http://en.opensuse.org/ZYPP</a></p>

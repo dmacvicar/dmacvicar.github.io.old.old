@@ -1,0 +1,44 @@
+---
+layout: post
+title: Writing ruby code
+date: 
+type: post
+published: false
+status: draft
+categories: []
+tags: []
+meta:
+  _edit_last: '34818'
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>One of the things that I like most about ruby is conventions. The language does not limit you to "one way" of doing something but the culture around the language will try hard that you do.</p>
+<p>This is very similar to languages in real life. When you learn a foreign language where it is spoken, you also learn a new way of thinking and acting. This means at the beginning you will need to observe lot of different situations and see how people behave. This allows you to be understood, and allows people to understand you. Even if you speak the language perfectly in terms of grammar, you may say something it is considered rude or where the semantics just don't translate 1:1 from your native language. </p>
+<p>Both ruby and the foreign language will allow for intentional or accidental misuse. This recognizes the fact that there is always a strong human component.</p>
+<p>I had recently the opportunity to do some Java and soon missed the ruby way. Java is still a world where the tool used to build your code, manage dependencies, etc is a topic for discussion, and keeps moving fast. There you have the ugly but pragmatic ant. The weird maven, its killer Gradle, etc.</p>
+<p>In this post I want to show you how a standard ruby component looks like. Which means basically describing the conventions and the tools used to create one.</p>
+<p>Ruby code is distributed in packages called gems. Gems contain modules, classes, programs and some extra information like dependencies. This eases automated installations a lot.</p>
+<p>[sourcecode language="text"]<br />
+bin/foo_bar<br />
+lib<br />
+lib/foo_bar.rb<br />
+lib/foo_bar<br />
+lib/foo_bar/version.rb<br />
+Rakefile<br />
+foo_bar.gemspec<br />
+Gemfile<br />
+[/sourcecode]</p>
+<p>[sourcecode language="ruby"]<br />
+module Foo<br />
+   VERSION = &quot;3.0&quot;<br />
+end<br />
+[/sourcecode]</p>
+<p>[sourcecode language="ruby"]<br />
+module Foo<br />
+   VERSION = &quot;3.0&quot;<br />
+end<br />
+[/sourcecode]</p>

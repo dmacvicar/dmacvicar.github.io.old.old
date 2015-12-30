@@ -1,0 +1,38 @@
+---
+layout: post
+title: 'zypper feature: source and automatic build dependencies install'
+date: 2008-08-18 19:18:54.000000000 +02:00
+type: post
+published: true
+status: publish
+categories: []
+tags:
+- packagekit
+- software
+- zypp
+- zypper
+meta:
+  posterous_6c96d52da40a5d7e34be538822acc826_post_id: '48644858'
+  posterous_6c96d52da40a5d7e34be538822acc826_permalink: http://duncan.mac-vicar.com/zypper-feature-source-and-automatic-build-dep
+author:
+  login: duncan
+  email: dmacvicar@gmail.com
+  display_name: duncan
+  first_name: Duncan
+  last_name: Mac-Vicar P.
+---
+<p>
+    There are features that are present since some time, but people just don't know about it. This time I will mention one that is very useful to developers.</p>
+<p>Imagine you are a contributor to foo, which is also available to the distribution as foo.rpm. However, you install the distro from packages, but compile your foo source tree by hand. Compiling foo requires lot of packages.</p>
+<p>zypper to the rescue. If foo is in the distribution, make sure you have the main distribution repository added, plus the source repository. Source packages have a nice feature: their Requires, are the BuildRequires of the binary package.</p>
+<p>The source install command (si) has a -d option to install only the dependencies, and not the source package itself. So lets say we want to compile PackageKit, lets install all the compile dependencies:</p>
+<p>    # sudo zypper si -d PackageKit<br />
+    Reading installed packages...</p>
+<p>    The following NEW packages are going to be installed:<br />
+      opensp openjade gtk-doc docbook_3 docbook-dsssl-stylesheets sqlite-devel</p>
+<p>Then I can go and compile:</p>
+<p>    PackageKit&gt; ./autogen.sh --libdir=/usr/lib64<br />
+      --prefix=/usr --enable-developer --with-security-framework=dummy<br />
+      --sysconfdir=/etc --with-dbus-sys=/etc/dbus-1/system.d<br />
+      --enable-zypp --with-default-backend=zypp</p>
+<p>Note, you *do* need the source repository added in order for this to work, otherwise zypper will not be able to find a matching src.rpm package to read the dependencies from.</p>
