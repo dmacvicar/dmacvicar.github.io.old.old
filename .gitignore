@@ -3,3 +3,6 @@ _site
 .jekyll-metadata
 *.rb
 *.csv
+bin
+_posts.orig
+_posts.md
