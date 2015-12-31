@@ -10,6 +10,7 @@ tags:
 - java
 - scala
 - xtend
+comments: true
 ---
 
 I have been playing with two languages recently: [Scala](http://www.scala-lang.org/) and [Xtend](http://www.eclipse.org/xtend/).
