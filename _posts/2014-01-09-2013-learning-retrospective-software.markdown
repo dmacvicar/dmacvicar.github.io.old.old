@@ -21,19 +21,16 @@ At work, It was an intense and exciting year:
   - While hacking my own [development tools](http://github.com/dmacvicar/vmit), learned a lot about [libvirt](http://libvirt.org/) and its API.
   - Redid one of my internal dashboard/report tools with [angularjs](http://angularjs.org).
   - Did [two](http://rubygems.org/gems/rpm) [ruby-rpm (ffi)](https://github.com/dmacvicar/ruby-rpm-ffi) releases.
-- 
 
 I completed two classes at [Coursera](http://www.coursera.org):
 
-  - [Functional Programming Principles in Scala](https://www.coursera.org/course/progfun), in May (7 weeks long). The instructor was [Martin Odersky](http://en.wikipedia.org/wiki/Martin_Odersky "Martin Odersky") and the course was offered by the [École Polytechnique Fédérale de Lausanne](http://en.wikipedia.org/wiki/%C3%89cole_Polytechnique_F%C3%A9d%C3%A9rale_de_Lausanne).
+* [Functional Programming Principles in Scala](https://www.coursera.org/course/progfun), in May (7 weeks long). The instructor was [Martin Odersky](http://en.wikipedia.org/wiki/Martin_Odersky "Martin Odersky") and the course was offered by the [École Polytechnique Fédérale de Lausanne](http://en.wikipedia.org/wiki/%C3%89cole_Polytechnique_F%C3%A9d%C3%A9rale_de_Lausanne).
 
 Here I learned a formal basis for functional programming (recursion and non-termination, working with functions as values, reasoning by reduction, pattern matching, lazy evaluation, etc) implementing the assignments in [Scala](http://en.wikipedia.org/wiki/Scala_(programming_language) "Scala").
 
 ![Functional Programming Principles in Scala]({{ site.baseurl }}/assets/large-icon.png)
 
-  - 
-
-[Principles of Reactive Programming](https://www.coursera.org/course/reactive) in November (7 weeks long). In addition to Martin Odersky, [Erik Meijer](http://en.wikipedia.org/wiki/Erik_Meijer_(computer_scientist)) and [Roland Kuhn](https://www.coursera.org/instructor/rolandkuhn) did a big chunk of the lectures.
+* [Principles of Reactive Programming](https://www.coursera.org/course/reactive) in November (7 weeks long). In addition to Martin Odersky, [Erik Meijer](http://en.wikipedia.org/wiki/Erik_Meijer_(computer_scientist)) and [Roland Kuhn](https://www.coursera.org/instructor/rolandkuhn) did a big chunk of the lectures.
 
 Here I learned a lot about for-expressions, monads, futures, promises, reactive stream processing, actors, supervision, etc.
 
@@ -42,8 +39,6 @@ Here I learned a lot about for-expressions, monads, futures, promises, reactive 
 I am very proud of those two achievements because it was not easy. Both courses involved between 5-10 hours a week of lectures and assignments (the 2nd was harder...) and I did them entirely in my private time and almost without disrupting my day job or family duties. I had to organize myself better. It still meant some weeks going very late to bed and trying to do the assignments while being very tired. But I managed to complete them all: got "with distinction" in the first course and I hope also in the second.
 
 But I am also happy because both courses give you knowledge that is very applicable to the current problems in Software. With more cores but same stupid brain, you need new models, languages and tools for writing concurrent, distributed and resilient software. These courses gave me a very good foundation into it.
-
-- 
 
 Various misc. hacking & learning:
 
