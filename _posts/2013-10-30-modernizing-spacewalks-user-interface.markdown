@@ -12,6 +12,7 @@ tags:
 - spacewalk
 - suse
 - suse manager
+comments: true
 ---
 
 [Spacewalk](http://spacewalk.redhat.com/ "Spacewalk home page") is [SUSE Manager](https://www.suse.com/products/suse-manager/ "SUSE Manager home page") upstream project. We base our product on Spacewalk's codebase and [contribute features and fixes back](http://goo.gl/0xmYWv "gmane search").
