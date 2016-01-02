@@ -6,9 +6,8 @@ categories:
 - Software
 tags:
 - java
+comments: true
 ---
-
-- 
 
 At work, It was an intense and exciting year:
 
