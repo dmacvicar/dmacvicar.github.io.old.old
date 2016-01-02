@@ -9,6 +9,7 @@ tags:
 - spacewalk
 - suse
 - susemanager
+comments: true
 ---
 
 Back in March, Christian Stankowic [analysed Spacewalk 2.1 and its new user interface](http://blog.christian-stankowic.de/?p=5862&lang=en "First sight at Spacewalk 2.1") look and feel. He asked himself how SUSE Manager would look like:
@@ -34,11 +35,4 @@ New features include, among others:
 
 And of course, most of the work is [already merged upstream](https://github.com/spacewalkproject/spacewalk/pulls).
 
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
 
